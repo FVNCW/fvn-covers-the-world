@@ -1,34 +1,36 @@
 {
-    "name": "fvn-covers-the-world",
-    "private": true,
-    "type": "module",
-    "module": "src/index.ts",
-    "scripts": {
-        "start": "bun run .",
-        "lint:style": "oxlint .",
-        "lint:format": "oxfmt .",
-        "lint:type": "tsc --noEmit",
-        "lint": "run-p lint:style lint:format lint:type"
-    },
-    "dependencies": {
-        "@elysiajs/cors": "^1.4.2",
-        "better-auth": "^1.7.1",
-        "drizzle-orm": "^0.45.2",
-        "elysia": "^1.4.29",
-        "postgres": "^3.4.9"
-    },
-    "devDependencies": {
-        "@better-auth/cli": "^1.4.21",
-        "@types/bun": "latest",
-        "@types/node": "^26.3.0",
-        "auth": "^1.7.1",
-        "drizzle-kit": "^0.31.10",
-        "npm-run-all": "^4.1.5",
-        "npx": "^10.2.2",
-        "oxfmt": "^0.65.0",
-        "oxlint": "^1.80.0"
-    },
-    "peerDependencies": {
-        "typescript": "^7"
-    }
+	"name": "fvn-covers-the-world",
+	"private": true,
+	"type": "module",
+	"module": "src/index.ts",
+	"scripts": {
+		"start": "bun run .",
+		"lint:style": "oxlint .",
+		"lint:format": "oxfmt .",
+		"lint:type": "tsc --noEmit",
+		"lint": "run-p lint:style lint:format lint:type",
+		"studio": "better-auth-studio start --config src/engine/lib/auth.ts"
+	},
+	"dependencies": {
+		"@elysiajs/cors": "^1.4.2",
+		"better-auth": "^1.7.1",
+		"drizzle-orm": "^0.45.2",
+		"elysia": "^1.4.29",
+		"postgres": "^3.4.9"
+	},
+	"devDependencies": {
+		"@better-auth/cli": "^1.4.21",
+		"@types/bun": "latest",
+		"@types/node": "^26.3.0",
+		"auth": "^1.7.1",
+		"better-auth-studio": "^1.1.5",
+		"drizzle-kit": "^0.31.10",
+		"npm-run-all": "^4.1.5",
+		"npx": "^10.2.2",
+		"oxfmt": "^0.65.0",
+		"oxlint": "^1.80.0"
+	},
+	"peerDependencies": {
+		"typescript": "^7"
+	}
 }

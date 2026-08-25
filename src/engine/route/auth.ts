@@ -19,14 +19,14 @@ export const authRoutes = new Elysia()
 	.post(
 		"/api/submit",
 		async ({ body, user }) => {
-			return await db
+			return (await db
 				.insert(characters)
 				.values({
 					createdBy: user.id,
 					displayName: body.display_name,
 					personality: body.personality,
 				})
-				.returning();
+				.returning())[0];
 		},
 		{ body: character },
 	);
