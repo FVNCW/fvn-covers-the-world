@@ -18,7 +18,7 @@ export const authRoutes = new Elysia()
         return { session: session.session, user: session.user };
     })
     .post(
-        "/api/submit",
+        "/api/character/create",
         async ({ body, user }) => {
             return db
                 .insert(characters)
@@ -32,7 +32,7 @@ export const authRoutes = new Elysia()
         { body: character },
     )
     .delete(
-        "/api/unsubmit",
+        "/api/character/delete",
         async ({ body, user }) => {
             return await db
                 .delete(characters)
