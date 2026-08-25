@@ -3,7 +3,7 @@ import { dirname, join } from "node:path";
 import { createHash, randomUUID } from "node:crypto";
 import type { BaseFileSystem, SavedFile } from "./filesystem";
 export class LocalFS implements BaseFileSystem {
-    constructor(private readonly root: string = "./data/objects") { }
+    constructor(private readonly root: string = "./data/objects") {}
     private ofName(id: string) {
         return join(this.root, id);
     }
@@ -23,7 +23,7 @@ export class LocalFS implements BaseFileSystem {
     async delete(id: string): Promise<void> {
         try {
             await unlink(this.ofName(id));
-        } catch { }
+        } catch {}
     }
     url(): string | undefined {
         return undefined;

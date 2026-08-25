@@ -5,7 +5,7 @@ export interface OSSFSConfig {
     endpoint?: string;
 }
 export class OSSFS implements BaseFileSystem {
-    constructor(private readonly config: OSSFSConfig) { }
+    constructor(private readonly config: OSSFSConfig) {}
     private key(id: string) {
         return id;
     }
@@ -22,9 +22,7 @@ export class OSSFS implements BaseFileSystem {
     }
     async delete(id: string): Promise<void> {
         if (this.config.endpoint) {
-            const res = await fetch(`${this.config.endpoint}/${this.key(id)}`, {
-                method: "DELETE",
-            });
+            await fetch(`${this.config.endpoint}/${this.key(id)}`, { method: "DELETE" });
         }
     }
     url(id: string): string {
@@ -32,7 +30,7 @@ export class OSSFS implements BaseFileSystem {
     }
     private async put(key: string, data: Buffer): Promise<void> {
         if (!this.config.endpoint) return;
-        const res = await fetch(`${this.config.endpoint}/${key}`, {
+        await fetch(`${this.config.endpoint}/${key}`, {
             method: "PUT",
             body: data,
             headers: { "Content-Type": "application/octet-stream" },

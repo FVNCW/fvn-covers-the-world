@@ -12,8 +12,9 @@ function createFileSystem(): BaseFileSystem {
                 endpoint: env.FCTW_STORAGE_OSS_ENDPOINT,
             });
         case "local":
-        default:
             return new LocalFS(env.FCTW_OBJECT_STORAGE);
+        default:
+            throw new Error("无效对象储存方式");
     }
 }
 export const fs: BaseFileSystem = createFileSystem();

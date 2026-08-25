@@ -1,4 +1,12 @@
-import { pgTable, serial, text, integer, boolean, jsonb, doublePrecision } from "drizzle-orm/pg-core";
+import {
+    pgTable,
+    serial,
+    text,
+    integer,
+    boolean,
+    jsonb,
+    doublePrecision,
+} from "drizzle-orm/pg-core";
 
 export const Objects = pgTable("objects", {
     id: text("id").primaryKey(),
