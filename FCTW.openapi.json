@@ -1,0 +1,822 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "FCTW",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [],
+  "paths": {
+    "/": {
+      "post": {
+        "summary": "创建节点",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "get": {
+        "summary": "检测几个物种能否混血",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "summary": "删除节点",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "put": {
+        "summary": "修改数据",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "patch": {
+        "summary": "修改父物种",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/illustration/add": {
+      "post": {
+        "summary": "添加立绘",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "character": {
+                    "type": "number"
+                  },
+                  "illustration": {
+                    "type": "object",
+                    "properties": {
+                      "displayName": {
+                        "type": "string",
+                        "description": "名字"
+                      },
+                      "tags": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "标签"
+                      }
+                    },
+                    "required": [
+                      "displayName",
+                      "tags"
+                    ]
+                  }
+                },
+                "required": [
+                  "character",
+                  "illustration"
+                ]
+              },
+              "examples": {}
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Illustration"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1,
+                  "uniqueItems": true
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/illustration/delete": {
+      "delete": {
+        "summary": "删除立绘",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "id"
+                ]
+              },
+              "examples": {}
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Illustration"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/character/create": {
+      "post": {
+        "summary": "创建角色",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "tags": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "description": "标签文本"
+                    },
+                    "description": "标签"
+                  },
+                  "displayName": {
+                    "type": "string",
+                    "description": "中文名"
+                  },
+                  "isDied": {
+                    "type": "boolean",
+                    "description": "是否已故"
+                  },
+                  "isFemale": {
+                    "type": "boolean",
+                    "description": "女的来了"
+                  },
+                  "information": {
+                    "type": "object",
+                    "properties": {
+                      "background": {
+                        "type": "string",
+                        "description": "背景故事"
+                      },
+                      "sources": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "description": "作品名，为空则直接隶属于因特网"
+                        },
+                        "description": "来源作品"
+                      },
+                      "personality": {
+                        "type": "string",
+                        "description": "人格"
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "综合介绍"
+                      }
+                    },
+                    "description": "信息聚合",
+                    "required": [
+                      "background",
+                      "sources",
+                      "personality",
+                      "description"
+                    ]
+                  },
+                  "specy": {
+                    "oneOf": [
+                      {
+                        "type": "array",
+                        "items": {
+                          "type": "number",
+                          "description": "指向父级物种ID"
+                        },
+                        "description": "混血种"
+                      },
+                      {
+                        "type": "number",
+                        "description": "纯血种"
+                      }
+                    ],
+                    "description": "物种"
+                  },
+                  "height": {
+                    "type": "number",
+                    "description": "身高"
+                  },
+                  "length": {
+                    "type": "number",
+                    "description": "这是一个神秘字段"
+                  },
+                  "color": {
+                    "type": "object",
+                    "properties": {
+                      "fur": {
+                        "$ref": "#/components/schemas/ComposedColor",
+                        "description": "毛发颜色"
+                      },
+                      "eye": {
+                        "$ref": "#/components/schemas/ComposedColor",
+                        "description": "瞳孔颜色"
+                      },
+                      "other": {
+                        "type": "object",
+                        "properties": {},
+                        "additionalProperties": {
+                          "$ref": "#/components/schemas/ComposedColor"
+                        },
+                        "description": "其他自定义部位的颜色"
+                      }
+                    },
+                    "required": [
+                      "fur",
+                      "eye",
+                      "other"
+                    ],
+                    "description": "颜色字典"
+                  },
+                  "relationShips": {
+                    "type": "object",
+                    "properties": {
+                      "parents": {
+                        "type": "array",
+                        "items": {
+                          "type": "number"
+                        },
+                        "description": "家人"
+                      },
+                      "friends": {
+                        "type": "array",
+                        "items": {
+                          "type": "number"
+                        },
+                        "description": "朋友"
+                      },
+                      "children": {
+                        "type": "array",
+                        "items": {
+                          "type": "number"
+                        },
+                        "description": "孩子"
+                      },
+                      "other": {
+                        "type": "object",
+                        "properties": {},
+                        "additionalProperties": {
+                          "type": "array",
+                          "items": {
+                            "type": "number"
+                          }
+                        },
+                        "description": "其他关系"
+                      }
+                    },
+                    "description": "关系节点",
+                    "required": [
+                      "parents",
+                      "friends",
+                      "children",
+                      "other"
+                    ]
+                  }
+                },
+                "required": [
+                  "tags",
+                  "displayName",
+                  "isDied",
+                  "isFemale",
+                  "information",
+                  "specy",
+                  "height",
+                  "length",
+                  "color",
+                  "relationShips"
+                ]
+              },
+              "example": {
+                "displayName": "哀治文",
+                "personality": "velit pariatur Excepteur"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Character"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1,
+                  "uniqueItems": true
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/character/delete": {
+      "delete": {
+        "summary": "删除角色",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "id"
+                ]
+              },
+              "example": {
+                "id": 70
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Illustration"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/character/today": {
+      "get": {
+        "summary": "每日抽卡",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "seed",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Character"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/character/list": {
+      "get": {
+        "summary": "角色列表",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Character"
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Illustration": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "数据库ID"
+          },
+          "objectId": {
+            "type": "string",
+            "description": "图片对象ID"
+          },
+          "displayName": {
+            "type": "string",
+            "description": "名字"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "标签"
+          }
+        },
+        "required": [
+          "displayName",
+          "objectId",
+          "tags",
+          "id"
+        ],
+        "description": "立绘"
+      },
+      "Specy": {
+        "type": "object",
+        "properties": {
+          "parents": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "description": "指向物种ID，为空代表根物种"
+            },
+            "description": "父物种"
+          },
+          "id": {
+            "type": "number",
+            "description": "数据库ID"
+          },
+          "displayName": {
+            "type": "string",
+            "description": "名字"
+          }
+        },
+        "required": [
+          "displayName",
+          "id",
+          "parents"
+        ],
+        "description": "物种"
+      },
+      "Character": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "数据库ID"
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "谁创建的"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "标签文本"
+            },
+            "description": "标签"
+          },
+          "illustrations": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "description": "立绘ID"
+            },
+            "description": "立绘"
+          },
+          "displayName": {
+            "type": "string",
+            "description": "中文名"
+          },
+          "isDied": {
+            "type": "boolean",
+            "description": "是否已故"
+          },
+          "isFemale": {
+            "type": "boolean",
+            "description": "女的来了"
+          },
+          "information": {
+            "type": "object",
+            "properties": {
+              "background": {
+                "type": "string",
+                "description": "背景故事"
+              },
+              "sources": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "description": "作品名，为空则直接隶属于因特网"
+                },
+                "description": "来源作品"
+              },
+              "personality": {
+                "type": "string",
+                "description": "人格"
+              },
+              "description": {
+                "type": "string",
+                "description": "综合介绍"
+              }
+            },
+            "description": "信息聚合",
+            "required": [
+              "background",
+              "sources",
+              "personality",
+              "description"
+            ]
+          },
+          "specy": {
+            "oneOf": [
+              {
+                "type": "array",
+                "items": {
+                  "type": "number",
+                  "description": "指向父级物种ID"
+                },
+                "description": "混血种"
+              },
+              {
+                "type": "number",
+                "description": "纯血种"
+              }
+            ],
+            "description": "物种"
+          },
+          "height": {
+            "type": "number",
+            "description": "身高"
+          },
+          "length": {
+            "type": "number",
+            "description": "这是一个神秘字段"
+          },
+          "color": {
+            "type": "object",
+            "properties": {
+              "fur": {
+                "$ref": "#/components/schemas/ComposedColor",
+                "description": "毛发颜色"
+              },
+              "eye": {
+                "$ref": "#/components/schemas/ComposedColor",
+                "description": "瞳孔颜色"
+              },
+              "other": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/ComposedColor"
+                },
+                "description": "其他自定义部位的颜色"
+              }
+            },
+            "required": [
+              "fur",
+              "eye",
+              "other"
+            ],
+            "description": "颜色字典"
+          },
+          "relationShips": {
+            "type": "object",
+            "properties": {
+              "parents": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "description": "家人"
+              },
+              "friends": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "description": "朋友"
+              },
+              "children": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "description": "孩子"
+              },
+              "other": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  }
+                },
+                "description": "其他关系"
+              }
+            },
+            "description": "关系节点",
+            "required": [
+              "parents",
+              "friends",
+              "children",
+              "other"
+            ]
+          }
+        },
+        "required": [
+          "displayName",
+          "information",
+          "id",
+          "createdBy",
+          "tags",
+          "illustrations",
+          "specy",
+          "height",
+          "length",
+          "isFemale",
+          "color",
+          "relationShips",
+          "isDied"
+        ],
+        "description": "完整的角色信息"
+      },
+      "ColorRGB": {
+        "type": "object",
+        "properties": {
+          "r": {
+            "type": "number",
+            "description": "R"
+          },
+          "g": {
+            "type": "number",
+            "description": "G"
+          },
+          "b": {
+            "type": "number",
+            "description": "B"
+          }
+        },
+        "required": [
+          "r",
+          "g",
+          "b"
+        ],
+        "description": "RGB颜色"
+      },
+      "ComposedColor": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/ColorRGB"
+        }
+      }
+    },
+    "responses": {},
+    "securitySchemes": {}
+  },
+  "servers": [],
+  "security": []
+}

@@ -24,7 +24,7 @@ export const authRoutes = new Elysia()
                 .insert(characters)
                 .values({
                     createdBy: user.id,
-                    displayName: body.display_name,
+                    displayName: body.displayName,
                     personality: body.personality,
                 })
                 .returning();

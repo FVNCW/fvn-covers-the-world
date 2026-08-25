@@ -9,7 +9,8 @@
         "lint:format": "oxfmt .",
         "lint:type": "tsc --noEmit",
         "lint": "run-p lint:style lint:format lint:type",
-        "studio": "better-auth-studio start --config src/engine/lib/auth.ts"
+        "studio": "better-auth-studio start --config src/engine/lib/auth.ts",
+        "generate:openapi": "openapi --input FCTW.openapi.json --output src/engine/schema/api"
     },
     "dependencies": {
         "@elysiajs/cors": "^1.4.2",
@@ -27,10 +28,12 @@
         "drizzle-kit": "^0.31.10",
         "npm-run-all": "^4.1.5",
         "npx": "^10.2.2",
+        "openapi-typescript": "^7.13.0",
+        "openapi-typescript-codegen": "^0.31.0",
         "oxfmt": "^0.65.0",
         "oxlint": "^1.80.0"
     },
     "peerDependencies": {
-        "typescript": "^7"
+        "typescript": "5.9.3"
     }
 }
