@@ -206,4 +206,23 @@ export const authRoutes = new Elysia()
         {
             params: t.Object({ id: t.String() }),
         },
+    )
+    .patch(
+        "/api/specy/rename/:id",
+        async ({ params, body, set }) => {
+            const [row] = await db
+                .update(Specys)
+                .set({ displayName: body.displayName })
+                .where(eq(Specys.id, Number(params.id)))
+                .returning();
+            if (!row) {
+                set.status = 404;
+                return apiState(false, "节点不存在");
+            }
+            return row;
+        },
+        {
+            params: t.Object({ id: t.String() }),
+            body: t.Object({ displayName: t.String() }),
+        },
     );
