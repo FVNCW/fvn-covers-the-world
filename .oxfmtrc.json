@@ -1,6 +1,6 @@
 {
     "$schema": "./node_modules/oxfmt/configuration_schema.json",
-    "ignorePatterns": [],
+    "ignorePatterns": ["frontend"],
     "tabWidth": 4,
     "semi": true
 }
