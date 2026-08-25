@@ -7,21 +7,40 @@
   },
   "tags": [],
   "paths": {
-    "/": {
+    "/api/object/upload": {
       "post": {
-        "summary": "创建节点",
+        "summary": "上传对象",
         "deprecated": false,
         "description": "",
         "tags": [],
         "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "type": "string",
+                    "description": "Base64"
+                  }
+                },
+                "required": [
+                  "data"
+                ]
+              },
+              "examples": {}
+            }
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {}
+                  "$ref": "#/components/schemas/TextureObject"
                 }
               }
             },
@@ -29,21 +48,42 @@
           }
         },
         "security": []
-      },
+      }
+    },
+    "/api/object/download/{id}": {
       "get": {
-        "summary": "检测几个物种能否混血",
+        "summary": "下载对象信息",
         "deprecated": false,
         "description": "",
         "tags": [],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID编号",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "const": "info"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {}
+                  "$ref": "#/components/schemas/TextureObject"
                 }
               }
             },
@@ -51,13 +91,25 @@
           }
         },
         "security": []
-      },
+      }
+    },
+    "/api/object/delete/{id}": {
       "delete": {
-        "summary": "删除节点",
+        "summary": "删除对象",
         "deprecated": false,
         "description": "",
         "tags": [],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "",
@@ -73,43 +125,52 @@
           }
         },
         "security": []
-      },
+      }
+    },
+    "/api/object/modify/{id}": {
       "put": {
         "summary": "修改数据",
         "deprecated": false,
         "description": "",
         "tags": [],
-        "parameters": [],
-        "responses": {
-          "200": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
             "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            },
-            "headers": {}
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "type": "string",
+                    "description": "Base64"
+                  }
+                },
+                "required": [
+                  "data"
+                ]
+              },
+              "examples": {}
+            }
+          },
+          "required": true
         },
-        "security": []
-      },
-      "patch": {
-        "summary": "修改父物种",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [],
         "responses": {
           "200": {
             "description": "",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {}
+                  "$ref": "#/components/schemas/TextureObject"
                 }
               }
             },
@@ -138,6 +199,10 @@
                   "illustration": {
                     "type": "object",
                     "properties": {
+                      "objectId": {
+                        "type": "string",
+                        "description": "图片对象ID"
+                      },
                       "displayName": {
                         "type": "string",
                         "description": "名字"
@@ -151,6 +216,7 @@
                       }
                     },
                     "required": [
+                      "objectId",
                       "displayName",
                       "tags"
                     ]
@@ -188,32 +254,23 @@
         "security": []
       }
     },
-    "/api/illustration/delete": {
+    "/api/illustration/delete/{id}": {
       "delete": {
         "summary": "删除立绘",
         "deprecated": false,
         "description": "",
         "tags": [],
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "number"
-                  }
-                },
-                "required": [
-                  "id"
-                ]
-              },
-              "examples": {}
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
             }
-          },
-          "required": true
-        },
+          }
+        ],
         "responses": {
           "200": {
             "description": "",
@@ -537,6 +594,226 @@
         },
         "security": []
       }
+    },
+    "/api/specy/create": {
+      "post": {
+        "summary": "创建节点",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "parents": {
+                    "type": "array",
+                    "items": {
+                      "type": "number",
+                      "description": "指向物种ID，为空代表根物种"
+                    },
+                    "description": "父物种"
+                  },
+                  "displayName": {
+                    "type": "string",
+                    "description": "名字"
+                  }
+                },
+                "required": [
+                  "parents",
+                  "displayName"
+                ]
+              },
+              "examples": {}
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Specy"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/specy/delete/{id}": {
+      "delete": {
+        "summary": "删除节点",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Specy"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/specy/list": {
+      "get": {
+        "summary": "所有节点列表",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Specy"
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/specy/try-mix": {
+      "get": {
+        "summary": "检测几个物种能否混血",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "specy",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": [
+              ""
+            ],
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "uniqueItems": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "a": {
+                        "type": "integer"
+                      },
+                      "b": {
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "a",
+                      "b"
+                    ]
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/specy/reparent/{id}": {
+      "patch": {
+        "summary": "修改父物种",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "parents",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": [
+              ""
+            ],
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "uniqueItems": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Specy"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
     }
   },
   "components": {
@@ -783,6 +1060,29 @@
           "isDied"
         ],
         "description": "完整的角色信息"
+      },
+      "TextureObject": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "ID 编号"
+          },
+          "hash": {
+            "type": "string",
+            "description": "哈希"
+          },
+          "uploader": {
+            "type": "string",
+            "description": "上传者"
+          }
+        },
+        "required": [
+          "id",
+          "hash",
+          "uploader"
+        ],
+        "description": "图片对象"
       },
       "ColorRGB": {
         "type": "object",
