@@ -1,6 +1,7 @@
 import cors from "@elysiajs/cors";
 import { app, auth } from "./app";
 import { env } from "./env-load";
+import { authRoutes } from "./route/auth";
 
 app.use(
     cors({
@@ -9,5 +10,6 @@ app.use(
         allowedHeaders: ["Content-Type", "Authorization"],
         credentials: true,
     }),
-);
-app.all("/api/auth/*", ({ request }) => auth.handler(request));
+)
+    .all("/api/auth/*", async ({ request }) => await auth.handler(request))
+    .use(authRoutes);
