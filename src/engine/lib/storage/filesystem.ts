@@ -7,4 +7,5 @@ export interface BaseFileSystem {
     write(id: string, data: Buffer): Promise<string>;
     delete(id: string): Promise<void>;
     url(id: string): string | undefined;
+    read(id: string): Promise<Buffer | undefined>;
 }

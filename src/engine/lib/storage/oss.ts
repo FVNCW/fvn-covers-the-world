@@ -28,6 +28,12 @@ export class OSSFS implements BaseFileSystem {
     url(id: string): string {
         return `${this.config.publicUrl.replace(/\/+$/, "")}/${this.key(id)}`;
     }
+    async read(id: string): Promise<Buffer | undefined> {
+        if (!this.config.endpoint) return undefined;
+        const res = await fetch(`${this.config.endpoint}/${this.key(id)}`);
+        if (!res.ok) return undefined;
+        return Buffer.from(await res.arrayBuffer());
+    }
     private async put(key: string, data: Buffer): Promise<void> {
         if (!this.config.endpoint) return;
         await fetch(`${this.config.endpoint}/${key}`, {

@@ -25,6 +25,14 @@ export class LocalFS implements BaseFileSystem {
             await unlink(this.ofName(id));
         } catch {}
     }
+    async read(id: string): Promise<Buffer | undefined> {
+        try {
+            const file = Bun.file(this.ofName(id));
+            return Buffer.from(await file.arrayBuffer());
+        } catch {
+            return undefined;
+        }
+    }
     url(): string | undefined {
         return undefined;
     }

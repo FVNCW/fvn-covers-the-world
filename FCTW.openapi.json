@@ -52,7 +52,7 @@
     },
     "/api/object/download/{id}": {
       "get": {
-        "summary": "下载对象信息",
+        "summary": "下载对象数据",
         "deprecated": false,
         "description": "",
         "tags": [],
@@ -65,15 +65,47 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "type",
-            "in": "query",
+          }
+        ],
+        "responses": {
+          "200": {
             "description": "",
+            "content": {
+              "image/*": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "string",
+                      "description": "Base64"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/object/metadata/{id}": {
+      "get": {
+        "summary": "下载对象信息",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID编号",
             "required": true,
             "schema": {
-              "type": "string",
-              "const": "info"
+              "type": "string"
             }
           }
         ],
