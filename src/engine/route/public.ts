@@ -1,6 +1,6 @@
 import Elysia, { t } from "elysia";
 import { db } from "../app";
-import { sql } from "drizzle-orm";
+import { eq, gt, or, sql } from "drizzle-orm";
 import { characters } from "../schema/database";
 import { generateSeed } from "../util/math";
 
@@ -17,5 +17,14 @@ export const publicRoutes = new Elysia()
 	}, {
 		params: t.Object({
 			qid: t.Numeric()
+		})
+	})
+	.get("/api/characters", async ({ query: { created_by } }) => {
+		return await db.select()
+			.from(characters)
+			.where(created_by ? eq(characters.createdBy, created_by) : sql`1=1`);
+	}, {
+		query: t.Object({
+			created_by: t.String({ default: "" })
 		})
 	});
