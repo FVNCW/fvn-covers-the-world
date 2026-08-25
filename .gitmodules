@@ -1,0 +1,3 @@
+[submodule "fvn-covers-the-frontend"]
+	path = fvn-covers-the-frontend
+	url = https://github.com/FVNCW/fvn-covers-the-frontend
