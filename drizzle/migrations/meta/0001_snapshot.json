@@ -1,6 +1,6 @@
 {
-    "id": "a7fdd762-2e18-4651-90da-beee40f1b632",
-    "prevId": "00000000-0000-0000-0000-000000000000",
+    "id": "4f32697f-11dd-4c1a-acab-bfb392669d75",
+    "prevId": "a7fdd762-2e18-4651-90da-beee40f1b632",
     "version": "7",
     "dialect": "postgresql",
     "tables": {
@@ -123,6 +123,12 @@
                     "type": "timestamp",
                     "primaryKey": false,
                     "notNull": true
+                },
+                "issuer": {
+                    "name": "issuer",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false
                 }
             },
             "indexes": {

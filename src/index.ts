@@ -5,5 +5,5 @@ import "./engine/route";
 console.log(env);
 
 app.listen(Number(env.FCTW_PORT), () => {
-	console.log(env.FCTW_PORT);
+    console.log(env.FCTW_PORT);
 });
