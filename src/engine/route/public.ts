@@ -1,7 +1,7 @@
 import Elysia, { t } from "elysia";
 import { db } from "../app";
 import { sql, eq } from "drizzle-orm";
-import { Characters, Objects, Specys } from "../schema/database";
+import { Characters, Illustrations, Objects, Specys } from "../schema/database";
 import { generateSeed } from "../util/math";
 import { apiState } from "../util/response";
 
@@ -43,6 +43,12 @@ export const publicRoutes = new Elysia()
             query: t.Object({ type: t.Optional(t.Literal("info")) }),
         },
     )
+    .get("/api/object/list", async () => {
+        return await db.select().from(Objects);
+    })
+    .get("/api/illustration/list", async () => {
+        return await db.select().from(Illustrations);
+    })
     .get("/api/specy/list", async () => {
         return await db.select().from(Specys);
     })

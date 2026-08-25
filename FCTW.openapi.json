@@ -93,6 +93,32 @@
         "security": []
       }
     },
+    "/api/object/list": {
+      "get": {
+        "summary": "对象列表",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TextureObject"
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
     "/api/object/delete/{id}": {
       "delete": {
         "summary": "删除对象",
@@ -282,6 +308,31 @@
               }
             },
             "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/illustration/list": {
+      "get": {
+        "summary": "立绘列表",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Illustration"
+                  }
+                }
+              }
+            }
           }
         },
         "security": []
