@@ -56,3 +56,5 @@ export const Character = t.Object({
         other: t.Record(t.String(), t.Array(t.Number())),
     }),
 });
+
+export const CharacterCreation = t.Omit(Character, ["id", "createdBy", "illustrations"]);
