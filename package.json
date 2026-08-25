@@ -10,7 +10,10 @@
         "lint:type": "tsc --noEmit",
         "lint": "run-p lint:style lint:format lint:type",
         "studio": "better-auth-studio start --config src/engine/lib/auth.ts",
-        "generate:openapi": "openapi --input FCTW.openapi.json --output src/engine/schema/api"
+        "generate:openapi": "openapi --input FCTW.openapi.json --output src/engine/schema/api",
+        "generate:database": "drizzle-kit generate",
+        "generate": "run-p generate:openapi generate:database",
+        "push": "drizzle-kit push"
     },
     "dependencies": {
         "@elysiajs/cors": "^1.4.2",
