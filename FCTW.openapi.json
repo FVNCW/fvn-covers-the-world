@@ -1,1576 +1,1464 @@
 {
-  "openapi": "3.0.1",
-  "info": {
-    "title": "FCTW",
-    "description": "",
-    "version": "1.0.0"
-  },
-  "tags": [],
-  "paths": {
-    "/api/object/upload": {
-      "post": {
-        "summary": "上传对象",
-        "deprecated": false,
+    "openapi": "3.0.1",
+    "info": {
+        "title": "FCTW",
         "description": "",
-        "tags": [],
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "data": {
-                    "type": "string",
-                    "description": "Base64"
-                  }
-                },
-                "required": [
-                  "data"
-                ]
-              },
-              "examples": {}
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TextureObject"
-                }
-              }
-            },
-            "headers": {}
-          }
-        },
-        "security": []
-      }
+        "version": "1.0.0"
     },
-    "/api/object/download/{id}": {
-      "get": {
-        "summary": "下载对象数据",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID编号",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "image/*": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "data": {
-                      "type": "string",
-                      "description": "Base64"
+    "tags": [],
+    "paths": {
+        "/api/object/upload": {
+            "post": {
+                "summary": "上传对象",
+                "deprecated": false,
+                "description": "",
+                "tags": [],
+                "parameters": [],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "type": "string",
+                                        "description": "Base64"
+                                    }
+                                },
+                                "required": ["data"]
+                            },
+                            "examples": {}
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TextureObject"
+                                }
+                            }
+                        },
+                        "headers": {}
                     }
-                  },
-                  "required": [
-                    "data"
-                  ]
-                }
-              }
-            },
-            "headers": {}
-          }
-        },
-        "security": []
-      }
-    },
-    "/api/object/metadata/{id}": {
-      "get": {
-        "summary": "下载对象信息",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID编号",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TextureObject"
-                }
-              }
-            },
-            "headers": {}
-          }
-        },
-        "security": []
-      }
-    },
-    "/api/object/list": {
-      "get": {
-        "summary": "对象列表",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TextureObject"
-                  }
-                }
-              }
-            },
-            "headers": {}
-          }
-        },
-        "security": []
-      }
-    },
-    "/api/object/delete/{id}": {
-      "delete": {
-        "summary": "删除对象",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            },
-            "headers": {}
-          }
-        },
-        "security": []
-      }
-    },
-    "/api/object/modify/{id}": {
-      "put": {
-        "summary": "修改数据",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "data": {
-                    "type": "string",
-                    "description": "Base64"
-                  }
                 },
-                "required": [
-                  "data"
-                ]
-              },
-              "examples": {}
+                "security": []
             }
-          },
-          "required": true
         },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TextureObject"
-                }
-              }
-            },
-            "headers": {}
-          }
+        "/api/object/download/{id}": {
+            "get": {
+                "summary": "下载对象数据",
+                "deprecated": false,
+                "description": "",
+                "tags": [],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID编号",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "image/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "string",
+                                            "description": "Base64"
+                                        }
+                                    },
+                                    "required": ["data"]
+                                }
+                            }
+                        },
+                        "headers": {}
+                    }
+                },
+                "security": []
+            }
         },
-        "security": []
-      }
+        "/api/object/metadata/{id}": {
+            "get": {
+                "summary": "下载对象信息",
+                "deprecated": false,
+                "description": "",
+                "tags": [],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID编号",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TextureObject"
+                                }
+                            }
+                        },
+                        "headers": {}
+                    }
+                },
+                "security": []
+            }
+        },
+        "/api/object/list": {
+            "get": {
+                "summary": "对象列表",
+                "deprecated": false,
+                "description": "",
+                "tags": [],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/TextureObject"
+                                    }
+                                }
+                            }
+                        },
+                        "headers": {}
+                    }
+                },
+                "security": []
+            }
+        },
+        "/api/object/delete/{id}": {
+            "delete": {
+                "summary": "删除对象",
+                "deprecated": false,
+                "description": "",
+                "tags": [],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {}
+                                }
+                            }
+                        },
+                        "headers": {}
+                    }
+                },
+                "security": []
+            }
+        },
+        "/api/object/modify/{id}": {
+            "put": {
+                "summary": "修改数据",
+                "deprecated": false,
+                "description": "",
+                "tags": [],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "type": "string",
+                                        "description": "Base64"
+                                    }
+                                },
+                                "required": ["data"]
+                            },
+                            "examples": {}
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TextureObject"
+                                }
+                            }
+                        },
+                        "headers": {}
+                    }
+                },
+                "security": []
+            }
+        },
+        "/api/illustration/add": {
+            "post": {
+                "summary": "添加立绘",
+                "deprecated": false,
+                "description": "",
+                "tags": [],
+                "parameters": [],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "character": {
+                                        "$ref": "#/components/schemas/ContentID"
+                                    },
+                                    "illustration": {
+                                        "type": "object",
+                                        "properties": {
+                                            "objectId": {
+                                                "type": "string",
+                                                "description": "图片对象ID"
+                                            },
+                                            "displayName": {
+                                                "type": "string",
+                                                "description": "名字"
+                                            },
+                                            "tags": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string"
+                                                },
+                                                "description": "标签"
+                                            }
+                                        },
+                                        "required": ["objectId", "displayName", "tags"]
+                                    }
+                                },
+                                "required": ["character", "illustration"]
+                            },
+                            "examples": {}
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Illustration"
+                                    },
+                                    "minItems": 1,
+                                    "maxItems": 1,
+                                    "uniqueItems": true
+                                }
+                            }
+                        },
+                        "headers": {}
+                    }
+                },
+                "security": []
+            }
+        },
+        "/api/illustration/delete/{id}": {
+            "delete": {
+                "summary": "删除立绘",
+                "deprecated": false,
+                "description": "",
+                "tags": [],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Illustration"
+                                }
+                            }
+                        },
+                        "headers": {}
+                    }
+                },
+                "security": []
+            }
+        },
+        "/api/illustration/list": {
+            "get": {
+                "summary": "立绘列表",
+                "deprecated": false,
+                "description": "",
+                "tags": [],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Illustration"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "/api/character/create": {
+            "post": {
+                "summary": "创建角色",
+                "deprecated": false,
+                "description": "",
+                "tags": [],
+                "parameters": [],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "tags": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "description": "标签文本"
+                                        },
+                                        "description": "标签"
+                                    },
+                                    "displayName": {
+                                        "type": "string",
+                                        "description": "中文名"
+                                    },
+                                    "isDied": {
+                                        "type": "boolean",
+                                        "description": "是否已故"
+                                    },
+                                    "isFemale": {
+                                        "type": "boolean",
+                                        "description": "女的来了"
+                                    },
+                                    "information": {
+                                        "type": "object",
+                                        "properties": {
+                                            "background": {
+                                                "type": "string",
+                                                "description": "背景故事"
+                                            },
+                                            "sources": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string",
+                                                    "description": "作品名，为空则直接隶属于因特网"
+                                                },
+                                                "description": "来源作品"
+                                            },
+                                            "personality": {
+                                                "type": "string",
+                                                "description": "人格"
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "description": "综合介绍"
+                                            }
+                                        },
+                                        "description": "信息聚合",
+                                        "required": [
+                                            "background",
+                                            "sources",
+                                            "personality",
+                                            "description"
+                                        ]
+                                    },
+                                    "specy": {
+                                        "oneOf": [
+                                            {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "number",
+                                                    "description": "指向父级物种ID"
+                                                },
+                                                "description": "混血种"
+                                            },
+                                            {
+                                                "type": "number",
+                                                "description": "纯血种"
+                                            }
+                                        ],
+                                        "description": "物种"
+                                    },
+                                    "height": {
+                                        "type": "number",
+                                        "description": "身高"
+                                    },
+                                    "length": {
+                                        "type": "number",
+                                        "description": "这是一个神秘字段"
+                                    },
+                                    "color": {
+                                        "type": "object",
+                                        "properties": {
+                                            "fur": {
+                                                "$ref": "#/components/schemas/ComposedColor",
+                                                "description": "毛发颜色"
+                                            },
+                                            "eye": {
+                                                "$ref": "#/components/schemas/ComposedColor",
+                                                "description": "瞳孔颜色"
+                                            },
+                                            "other": {
+                                                "type": "object",
+                                                "properties": {},
+                                                "additionalProperties": {
+                                                    "$ref": "#/components/schemas/ComposedColor"
+                                                },
+                                                "description": "其他自定义部位的颜色"
+                                            }
+                                        },
+                                        "required": ["fur", "eye", "other"],
+                                        "description": "颜色字典"
+                                    },
+                                    "relationShips": {
+                                        "type": "object",
+                                        "properties": {
+                                            "parents": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "number"
+                                                },
+                                                "description": "家人"
+                                            },
+                                            "friends": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "number"
+                                                },
+                                                "description": "朋友"
+                                            },
+                                            "children": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "number"
+                                                },
+                                                "description": "孩子"
+                                            },
+                                            "other": {
+                                                "type": "object",
+                                                "properties": {},
+                                                "additionalProperties": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                "description": "其他关系"
+                                            }
+                                        },
+                                        "description": "关系节点",
+                                        "required": ["parents", "friends", "children", "other"]
+                                    }
+                                },
+                                "required": [
+                                    "tags",
+                                    "displayName",
+                                    "isDied",
+                                    "isFemale",
+                                    "information",
+                                    "specy",
+                                    "height",
+                                    "length",
+                                    "color",
+                                    "relationShips"
+                                ]
+                            },
+                            "example": {
+                                "displayName": "哀治文",
+                                "personality": "velit pariatur Excepteur"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Character"
+                                    },
+                                    "minItems": 1,
+                                    "maxItems": 1,
+                                    "uniqueItems": true
+                                }
+                            }
+                        },
+                        "headers": {}
+                    }
+                },
+                "security": []
+            }
+        },
+        "/api/character/delete": {
+            "delete": {
+                "summary": "删除角色",
+                "deprecated": false,
+                "description": "",
+                "tags": [],
+                "parameters": [],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "$ref": "#/components/schemas/ContentID"
+                                    }
+                                },
+                                "required": ["id"]
+                            },
+                            "example": {
+                                "id": 70
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Illustration"
+                                }
+                            }
+                        },
+                        "headers": {}
+                    }
+                },
+                "security": []
+            }
+        },
+        "/api/character/today": {
+            "get": {
+                "summary": "每日抽卡",
+                "deprecated": false,
+                "description": "",
+                "tags": [],
+                "parameters": [
+                    {
+                        "name": "seed",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Character"
+                                }
+                            }
+                        },
+                        "headers": {}
+                    }
+                },
+                "security": []
+            }
+        },
+        "/api/character/list": {
+            "get": {
+                "summary": "角色列表",
+                "deprecated": false,
+                "description": "",
+                "tags": [],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Character"
+                                    }
+                                }
+                            }
+                        },
+                        "headers": {}
+                    }
+                },
+                "security": []
+            }
+        },
+        "/api/character/data/{id}": {
+            "get": {
+                "summary": "角色信息",
+                "deprecated": false,
+                "description": "",
+                "tags": [],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Character"
+                                }
+                            }
+                        },
+                        "headers": {}
+                    }
+                },
+                "security": []
+            }
+        },
+        "/api/specy/create": {
+            "post": {
+                "summary": "创建节点",
+                "deprecated": false,
+                "description": "",
+                "tags": [],
+                "parameters": [],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "parents": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "number",
+                                            "description": "指向物种ID，为空代表根物种"
+                                        },
+                                        "description": "父物种"
+                                    },
+                                    "displayName": {
+                                        "type": "string",
+                                        "description": "名字"
+                                    },
+                                    "conflictWith": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/components/schemas/ContentID",
+                                            "description": "指向物种ID"
+                                        },
+                                        "description": "与哪些物种产生混血冲突"
+                                    }
+                                },
+                                "required": ["parents", "displayName", "conflictWith"]
+                            },
+                            "examples": {}
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Specy"
+                                    },
+                                    "minItems": 1,
+                                    "maxItems": 1
+                                }
+                            }
+                        },
+                        "headers": {}
+                    }
+                },
+                "security": []
+            }
+        },
+        "/api/specy/delete/{id}": {
+            "delete": {
+                "summary": "删除节点",
+                "deprecated": false,
+                "description": "",
+                "tags": [],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Specy"
+                                }
+                            }
+                        },
+                        "headers": {}
+                    }
+                },
+                "security": []
+            }
+        },
+        "/api/specy/list": {
+            "get": {
+                "summary": "所有节点列表",
+                "deprecated": false,
+                "description": "",
+                "tags": [],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Specy"
+                                    }
+                                }
+                            }
+                        },
+                        "headers": {}
+                    }
+                },
+                "security": []
+            }
+        },
+        "/api/specy/try-mix": {
+            "get": {
+                "summary": "检测几个物种能否混血",
+                "deprecated": false,
+                "description": "返回的数组每项都为会产生混血冲突的两个物种",
+                "tags": [],
+                "parameters": [
+                    {
+                        "name": "specy",
+                        "in": "query",
+                        "description": "",
+                        "required": true,
+                        "example": [""],
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "uniqueItems": true
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "a": {
+                                                "$ref": "#/components/schemas/Specy"
+                                            },
+                                            "b": {
+                                                "$ref": "#/components/schemas/Specy"
+                                            }
+                                        },
+                                        "required": ["a", "b"]
+                                    }
+                                }
+                            }
+                        },
+                        "headers": {}
+                    }
+                },
+                "security": []
+            }
+        },
+        "/api/specy/reparent/{id}": {
+            "patch": {
+                "summary": "修改父物种",
+                "deprecated": false,
+                "description": "",
+                "tags": [],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "parents",
+                        "in": "query",
+                        "description": "",
+                        "required": true,
+                        "example": [""],
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "uniqueItems": true
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Specy"
+                                }
+                            }
+                        },
+                        "headers": {}
+                    }
+                },
+                "security": []
+            }
+        },
+        "/api/specy/rename/{id}": {
+            "patch": {
+                "summary": "重命名物种",
+                "deprecated": false,
+                "description": "",
+                "tags": [],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "displayName": {
+                                        "type": "string",
+                                        "description": "新名字"
+                                    }
+                                },
+                                "required": ["displayName"]
+                            },
+                            "examples": {}
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Specy"
+                                }
+                            }
+                        },
+                        "headers": {}
+                    }
+                },
+                "security": []
+            }
+        },
+        "/api/search": {
+            "post": {
+                "summary": "获取内容列表",
+                "deprecated": false,
+                "description": "",
+                "tags": [],
+                "parameters": [],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "type": {
+                                        "$ref": "#/components/schemas/ContentType"
+                                    },
+                                    "condition": {
+                                        "$ref": "#/components/schemas/AnyCondition"
+                                    }
+                                },
+                                "required": ["type", "condition"]
+                            },
+                            "examples": {}
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "oneOf": [
+                                            {
+                                                "$ref": "#/components/schemas/Character"
+                                            },
+                                            {
+                                                "$ref": "#/components/schemas/TextureObject"
+                                            },
+                                            {
+                                                "$ref": "#/components/schemas/Illustration"
+                                            },
+                                            {
+                                                "$ref": "#/components/schemas/Specy"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        },
+                        "headers": {}
+                    }
+                },
+                "security": []
+            }
+        }
     },
-    "/api/illustration/add": {
-      "post": {
-        "summary": "添加立绘",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
+    "components": {
+        "schemas": {
+            "Illustration": {
                 "type": "object",
                 "properties": {
-                  "character": {
-                    "$ref": "#/components/schemas/ContentID"
-                  },
-                  "illustration": {
-                    "type": "object",
-                    "properties": {
-                      "objectId": {
+                    "id": {
+                        "description": "数据库ID",
+                        "$ref": "#/components/schemas/ContentID"
+                    },
+                    "objectId": {
                         "type": "string",
                         "description": "图片对象ID"
-                      },
-                      "displayName": {
+                    },
+                    "displayName": {
                         "type": "string",
                         "description": "名字"
-                      },
-                      "tags": {
+                    },
+                    "tags": {
                         "type": "array",
                         "items": {
-                          "type": "string"
+                            "type": "string"
                         },
                         "description": "标签"
-                      }
-                    },
-                    "required": [
-                      "objectId",
-                      "displayName",
-                      "tags"
-                    ]
-                  }
+                    }
                 },
-                "required": [
-                  "character",
-                  "illustration"
-                ]
-              },
-              "examples": {}
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Illustration"
-                  },
-                  "minItems": 1,
-                  "maxItems": 1,
-                  "uniqueItems": true
-                }
-              }
+                "required": ["displayName", "objectId", "tags", "id"],
+                "description": "立绘"
             },
-            "headers": {}
-          }
-        },
-        "security": []
-      }
-    },
-    "/api/illustration/delete/{id}": {
-      "delete": {
-        "summary": "删除立绘",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Illustration"
-                }
-              }
-            },
-            "headers": {}
-          }
-        },
-        "security": []
-      }
-    },
-    "/api/illustration/list": {
-      "get": {
-        "summary": "立绘列表",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Illustration"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": []
-      }
-    },
-    "/api/character/create": {
-      "post": {
-        "summary": "创建角色",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
+            "Specy": {
                 "type": "object",
                 "properties": {
-                  "tags": {
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "description": "标签文本"
+                    "id": {
+                        "description": "数据库ID",
+                        "$ref": "#/components/schemas/ContentID"
                     },
-                    "description": "标签"
-                  },
-                  "displayName": {
-                    "type": "string",
-                    "description": "中文名"
-                  },
-                  "isDied": {
-                    "type": "boolean",
-                    "description": "是否已故"
-                  },
-                  "isFemale": {
-                    "type": "boolean",
-                    "description": "女的来了"
-                  },
-                  "information": {
-                    "type": "object",
-                    "properties": {
-                      "background": {
-                        "type": "string",
-                        "description": "背景故事"
-                      },
-                      "sources": {
+                    "parents": {
                         "type": "array",
                         "items": {
-                          "type": "string",
-                          "description": "作品名，为空则直接隶属于因特网"
+                            "type": "number",
+                            "description": "指向物种ID，为空代表根物种"
                         },
-                        "description": "来源作品"
-                      },
-                      "personality": {
-                        "type": "string",
-                        "description": "人格"
-                      },
-                      "description": {
-                        "type": "string",
-                        "description": "综合介绍"
-                      }
+                        "description": "父物种"
                     },
-                    "description": "信息聚合",
-                    "required": [
-                      "background",
-                      "sources",
-                      "personality",
-                      "description"
-                    ]
-                  },
-                  "specy": {
-                    "oneOf": [
-                      {
+                    "displayName": {
+                        "type": "string",
+                        "description": "名字"
+                    },
+                    "conflictWith": {
                         "type": "array",
                         "items": {
-                          "type": "number",
-                          "description": "指向父级物种ID"
+                            "$ref": "#/components/schemas/ContentID",
+                            "description": "指向物种ID"
                         },
-                        "description": "混血种"
-                      },
-                      {
+                        "description": "与哪些物种产生混血冲突"
+                    }
+                },
+                "required": ["displayName", "id", "parents", "conflictWith"],
+                "description": "物种"
+            },
+            "Character": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "description": "数据库ID",
+                        "$ref": "#/components/schemas/ContentID"
+                    },
+                    "createdBy": {
+                        "type": "string",
+                        "description": "谁创建的"
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "description": "标签文本"
+                        },
+                        "description": "标签"
+                    },
+                    "illustrations": {
+                        "type": "array",
+                        "items": {
+                            "type": "number",
+                            "description": "立绘ID"
+                        },
+                        "description": "立绘"
+                    },
+                    "displayName": {
+                        "type": "string",
+                        "description": "中文名"
+                    },
+                    "isDied": {
+                        "type": "boolean",
+                        "description": "是否已故"
+                    },
+                    "isFemale": {
+                        "type": "boolean",
+                        "description": "女的来了"
+                    },
+                    "information": {
+                        "type": "object",
+                        "properties": {
+                            "background": {
+                                "type": "string",
+                                "description": "背景故事"
+                            },
+                            "sources": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "description": "作品名，为空则直接隶属于因特网"
+                                },
+                                "description": "来源作品"
+                            },
+                            "personality": {
+                                "type": "string",
+                                "description": "人格"
+                            },
+                            "description": {
+                                "type": "string",
+                                "description": "综合介绍"
+                            }
+                        },
+                        "description": "信息聚合",
+                        "required": ["background", "sources", "personality", "description"]
+                    },
+                    "specy": {
+                        "oneOf": [
+                            {
+                                "type": "array",
+                                "items": {
+                                    "type": "number",
+                                    "description": "指向父级物种ID"
+                                },
+                                "description": "混血种"
+                            },
+                            {
+                                "type": "number",
+                                "description": "纯血种"
+                            }
+                        ],
+                        "description": "物种"
+                    },
+                    "height": {
                         "type": "number",
-                        "description": "纯血种"
-                      }
-                    ],
-                    "description": "物种"
-                  },
-                  "height": {
-                    "type": "number",
-                    "description": "身高"
-                  },
-                  "length": {
-                    "type": "number",
-                    "description": "这是一个神秘字段"
-                  },
-                  "color": {
-                    "type": "object",
-                    "properties": {
-                      "fur": {
-                        "$ref": "#/components/schemas/ComposedColor",
-                        "description": "毛发颜色"
-                      },
-                      "eye": {
-                        "$ref": "#/components/schemas/ComposedColor",
-                        "description": "瞳孔颜色"
-                      },
-                      "other": {
+                        "description": "身高"
+                    },
+                    "length": {
+                        "type": "number",
+                        "description": "这是一个神秘字段"
+                    },
+                    "color": {
                         "type": "object",
-                        "properties": {},
-                        "additionalProperties": {
-                          "$ref": "#/components/schemas/ComposedColor"
+                        "properties": {
+                            "fur": {
+                                "$ref": "#/components/schemas/ComposedColor",
+                                "description": "毛发颜色"
+                            },
+                            "eye": {
+                                "$ref": "#/components/schemas/ComposedColor",
+                                "description": "瞳孔颜色"
+                            },
+                            "other": {
+                                "type": "object",
+                                "properties": {},
+                                "additionalProperties": {
+                                    "$ref": "#/components/schemas/ComposedColor"
+                                },
+                                "description": "其他自定义部位的颜色"
+                            }
                         },
-                        "description": "其他自定义部位的颜色"
-                      }
+                        "required": ["fur", "eye", "other"],
+                        "description": "颜色字典"
                     },
-                    "required": [
-                      "fur",
-                      "eye",
-                      "other"
-                    ],
-                    "description": "颜色字典"
-                  },
-                  "relationShips": {
-                    "type": "object",
-                    "properties": {
-                      "parents": {
-                        "type": "array",
-                        "items": {
-                          "type": "number"
-                        },
-                        "description": "家人"
-                      },
-                      "friends": {
-                        "type": "array",
-                        "items": {
-                          "type": "number"
-                        },
-                        "description": "朋友"
-                      },
-                      "children": {
-                        "type": "array",
-                        "items": {
-                          "type": "number"
-                        },
-                        "description": "孩子"
-                      },
-                      "other": {
+                    "relationShips": {
                         "type": "object",
-                        "properties": {},
-                        "additionalProperties": {
-                          "type": "array",
-                          "items": {
-                            "type": "number"
-                          }
+                        "properties": {
+                            "parents": {
+                                "type": "array",
+                                "items": {
+                                    "type": "number"
+                                },
+                                "description": "家人"
+                            },
+                            "friends": {
+                                "type": "array",
+                                "items": {
+                                    "type": "number"
+                                },
+                                "description": "朋友"
+                            },
+                            "children": {
+                                "type": "array",
+                                "items": {
+                                    "type": "number"
+                                },
+                                "description": "孩子"
+                            },
+                            "other": {
+                                "type": "object",
+                                "properties": {},
+                                "additionalProperties": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "number"
+                                    }
+                                },
+                                "description": "其他关系"
+                            }
                         },
-                        "description": "其他关系"
-                      }
-                    },
-                    "description": "关系节点",
-                    "required": [
-                      "parents",
-                      "friends",
-                      "children",
-                      "other"
-                    ]
-                  }
+                        "description": "关系节点",
+                        "required": ["parents", "friends", "children", "other"]
+                    }
                 },
                 "required": [
-                  "tags",
-                  "displayName",
-                  "isDied",
-                  "isFemale",
-                  "information",
-                  "specy",
-                  "height",
-                  "length",
-                  "color",
-                  "relationShips"
-                ]
-              },
-              "example": {
-                "displayName": "哀治文",
-                "personality": "velit pariatur Excepteur"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Character"
-                  },
-                  "minItems": 1,
-                  "maxItems": 1,
-                  "uniqueItems": true
-                }
-              }
-            },
-            "headers": {}
-          }
-        },
-        "security": []
-      }
-    },
-    "/api/character/delete": {
-      "delete": {
-        "summary": "删除角色",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "$ref": "#/components/schemas/ContentID"
-                  }
-                },
-                "required": [
-                  "id"
-                ]
-              },
-              "example": {
-                "id": 70
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Illustration"
-                }
-              }
-            },
-            "headers": {}
-          }
-        },
-        "security": []
-      }
-    },
-    "/api/character/today": {
-      "get": {
-        "summary": "每日抽卡",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [
-          {
-            "name": "seed",
-            "in": "query",
-            "description": "",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Character"
-                }
-              }
-            },
-            "headers": {}
-          }
-        },
-        "security": []
-      }
-    },
-    "/api/character/list": {
-      "get": {
-        "summary": "角色列表",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Character"
-                  }
-                }
-              }
-            },
-            "headers": {}
-          }
-        },
-        "security": []
-      }
-    },
-    "/api/character/data/{id}": {
-      "get": {
-        "summary": "角色信息",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Character"
-                }
-              }
-            },
-            "headers": {}
-          }
-        },
-        "security": []
-      }
-    },
-    "/api/specy/create": {
-      "post": {
-        "summary": "创建节点",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "parents": {
-                    "type": "array",
-                    "items": {
-                      "type": "number",
-                      "description": "指向物种ID，为空代表根物种"
-                    },
-                    "description": "父物种"
-                  },
-                  "displayName": {
-                    "type": "string",
-                    "description": "名字"
-                  },
-                  "conflictWith": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/ContentID",
-                      "description": "指向物种ID"
-                    },
-                    "description": "与哪些物种产生混血冲突"
-                  }
-                },
-                "required": [
-                  "parents",
-                  "displayName",
-                  "conflictWith"
-                ]
-              },
-              "examples": {}
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Specy"
-                  },
-                  "minItems": 1,
-                  "maxItems": 1
-                }
-              }
-            },
-            "headers": {}
-          }
-        },
-        "security": []
-      }
-    },
-    "/api/specy/delete/{id}": {
-      "delete": {
-        "summary": "删除节点",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Specy"
-                }
-              }
-            },
-            "headers": {}
-          }
-        },
-        "security": []
-      }
-    },
-    "/api/specy/list": {
-      "get": {
-        "summary": "所有节点列表",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Specy"
-                  }
-                }
-              }
-            },
-            "headers": {}
-          }
-        },
-        "security": []
-      }
-    },
-    "/api/specy/try-mix": {
-      "get": {
-        "summary": "检测几个物种能否混血",
-        "deprecated": false,
-        "description": "返回的数组每项都为会产生混血冲突的两个物种",
-        "tags": [],
-        "parameters": [
-          {
-            "name": "specy",
-            "in": "query",
-            "description": "",
-            "required": true,
-            "example": [
-              ""
-            ],
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "uniqueItems": true
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "a": {
-                        "$ref": "#/components/schemas/Specy"
-                      },
-                      "b": {
-                        "$ref": "#/components/schemas/Specy"
-                      }
-                    },
-                    "required": [
-                      "a",
-                      "b"
-                    ]
-                  }
-                }
-              }
-            },
-            "headers": {}
-          }
-        },
-        "security": []
-      }
-    },
-    "/api/specy/reparent/{id}": {
-      "patch": {
-        "summary": "修改父物种",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "parents",
-            "in": "query",
-            "description": "",
-            "required": true,
-            "example": [
-              ""
-            ],
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "uniqueItems": true
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Specy"
-                }
-              }
-            },
-            "headers": {}
-          }
-        },
-        "security": []
-      }
-    },
-    "/api/specy/rename/{id}": {
-      "patch": {
-        "summary": "重命名物种",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "displayName": {
-                    "type": "string",
-                    "description": "新名字"
-                  }
-                },
-                "required": [
-                  "displayName"
-                ]
-              },
-              "examples": {}
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Specy"
-                }
-              }
-            },
-            "headers": {}
-          }
-        },
-        "security": []
-      }
-    },
-    "/api/search": {
-      "post": {
-        "summary": "获取内容列表",
-        "deprecated": false,
-        "description": "",
-        "tags": [],
-        "parameters": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "$ref": "#/components/schemas/ContentType"
-                  },
-                  "condition": {
-                    "$ref": "#/components/schemas/AnyCondition"
-                  }
-                },
-                "required": [
-                  "type",
-                  "condition"
-                ]
-              },
-              "examples": {}
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "oneOf": [
-                      {
-                        "$ref": "#/components/schemas/Character"
-                      },
-                      {
-                        "$ref": "#/components/schemas/TextureObject"
-                      },
-                      {
-                        "$ref": "#/components/schemas/Illustration"
-                      },
-                      {
-                        "$ref": "#/components/schemas/Specy"
-                      }
-                    ]
-                  }
-                }
-              }
-            },
-            "headers": {}
-          }
-        },
-        "security": []
-      }
-    }
-  },
-  "components": {
-    "schemas": {
-      "Illustration": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "description": "数据库ID",
-            "$ref": "#/components/schemas/ContentID"
-          },
-          "objectId": {
-            "type": "string",
-            "description": "图片对象ID"
-          },
-          "displayName": {
-            "type": "string",
-            "description": "名字"
-          },
-          "tags": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "description": "标签"
-          }
-        },
-        "required": [
-          "displayName",
-          "objectId",
-          "tags",
-          "id"
-        ],
-        "description": "立绘"
-      },
-      "Specy": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "description": "数据库ID",
-            "$ref": "#/components/schemas/ContentID"
-          },
-          "parents": {
-            "type": "array",
-            "items": {
-              "type": "number",
-              "description": "指向物种ID，为空代表根物种"
-            },
-            "description": "父物种"
-          },
-          "displayName": {
-            "type": "string",
-            "description": "名字"
-          },
-          "conflictWith": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ContentID",
-              "description": "指向物种ID"
-            },
-            "description": "与哪些物种产生混血冲突"
-          }
-        },
-        "required": [
-          "displayName",
-          "id",
-          "parents",
-          "conflictWith"
-        ],
-        "description": "物种"
-      },
-      "Character": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "description": "数据库ID",
-            "$ref": "#/components/schemas/ContentID"
-          },
-          "createdBy": {
-            "type": "string",
-            "description": "谁创建的"
-          },
-          "tags": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "description": "标签文本"
-            },
-            "description": "标签"
-          },
-          "illustrations": {
-            "type": "array",
-            "items": {
-              "type": "number",
-              "description": "立绘ID"
-            },
-            "description": "立绘"
-          },
-          "displayName": {
-            "type": "string",
-            "description": "中文名"
-          },
-          "isDied": {
-            "type": "boolean",
-            "description": "是否已故"
-          },
-          "isFemale": {
-            "type": "boolean",
-            "description": "女的来了"
-          },
-          "information": {
-            "type": "object",
-            "properties": {
-              "background": {
-                "type": "string",
-                "description": "背景故事"
-              },
-              "sources": {
-                "type": "array",
-                "items": {
-                  "type": "string",
-                  "description": "作品名，为空则直接隶属于因特网"
-                },
-                "description": "来源作品"
-              },
-              "personality": {
-                "type": "string",
-                "description": "人格"
-              },
-              "description": {
-                "type": "string",
-                "description": "综合介绍"
-              }
-            },
-            "description": "信息聚合",
-            "required": [
-              "background",
-              "sources",
-              "personality",
-              "description"
-            ]
-          },
-          "specy": {
-            "oneOf": [
-              {
-                "type": "array",
-                "items": {
-                  "type": "number",
-                  "description": "指向父级物种ID"
-                },
-                "description": "混血种"
-              },
-              {
-                "type": "number",
-                "description": "纯血种"
-              }
-            ],
-            "description": "物种"
-          },
-          "height": {
-            "type": "number",
-            "description": "身高"
-          },
-          "length": {
-            "type": "number",
-            "description": "这是一个神秘字段"
-          },
-          "color": {
-            "type": "object",
-            "properties": {
-              "fur": {
-                "$ref": "#/components/schemas/ComposedColor",
-                "description": "毛发颜色"
-              },
-              "eye": {
-                "$ref": "#/components/schemas/ComposedColor",
-                "description": "瞳孔颜色"
-              },
-              "other": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": {
-                  "$ref": "#/components/schemas/ComposedColor"
-                },
-                "description": "其他自定义部位的颜色"
-              }
-            },
-            "required": [
-              "fur",
-              "eye",
-              "other"
-            ],
-            "description": "颜色字典"
-          },
-          "relationShips": {
-            "type": "object",
-            "properties": {
-              "parents": {
-                "type": "array",
-                "items": {
-                  "type": "number"
-                },
-                "description": "家人"
-              },
-              "friends": {
-                "type": "array",
-                "items": {
-                  "type": "number"
-                },
-                "description": "朋友"
-              },
-              "children": {
-                "type": "array",
-                "items": {
-                  "type": "number"
-                },
-                "description": "孩子"
-              },
-              "other": {
-                "type": "object",
-                "properties": {},
-                "additionalProperties": {
-                  "type": "array",
-                  "items": {
-                    "type": "number"
-                  }
-                },
-                "description": "其他关系"
-              }
-            },
-            "description": "关系节点",
-            "required": [
-              "parents",
-              "friends",
-              "children",
-              "other"
-            ]
-          }
-        },
-        "required": [
-          "displayName",
-          "information",
-          "id",
-          "createdBy",
-          "tags",
-          "illustrations",
-          "specy",
-          "height",
-          "length",
-          "isFemale",
-          "color",
-          "relationShips",
-          "isDied"
-        ],
-        "description": "完整的角色信息"
-      },
-      "TextureObject": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "description": "ID 编号",
-            "$ref": "#/components/schemas/ContentUUID"
-          },
-          "hash": {
-            "type": "string",
-            "description": "哈希"
-          },
-          "uploader": {
-            "type": "string",
-            "description": "上传者"
-          }
-        },
-        "required": [
-          "id",
-          "hash",
-          "uploader"
-        ],
-        "description": "图片对象"
-      },
-      "EqualCondition": {
-        "type": "object",
-        "properties": {
-          "filter": {
-            "$ref": "#/components/schemas/FieldFilter",
-            "description": "字段过滤器"
-          },
-          "type": {
-            "type": "string",
-            "const": "equal",
-            "description": "用于区分equal与compose"
-          },
-          "fieldType": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FieldType",
-              "description": "作用的字段类型"
-            },
-            "description": "作用的字段类型"
-          }
-        },
-        "required": [
-          "filter",
-          "type",
-          "fieldType"
-        ],
-        "description": "==条件"
-      },
-      "ComposeCondition": {
-        "type": "object",
-        "properties": {
-          "filters": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AnyCondition",
-              "description": "任意条件嵌套均可"
-            },
-            "description": "字段过滤器"
-          },
-          "type": {
-            "type": "string",
-            "const": "compose",
-            "description": "用于区分equal与compose"
-          },
-          "fieldType": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FieldType",
-              "description": "字段类型"
-            },
-            "description": "作用的字段类型"
-          },
-          "composeType": {
-            "type": "string",
-            "enum": [
-              "and",
-              "or"
-            ]
-          }
-        },
-        "required": [
-          "filters",
-          "type",
-          "fieldType",
-          "composeType"
-        ],
-        "description": "or或and等有子句的条件"
-      },
-      "AnyCondition": {
-        "oneOf": [
-          {
-            "$ref": "#/components/schemas/EqualCondition",
-            "description": "equal全量匹配"
-          },
-          {
-            "$ref": "#/components/schemas/ComposeCondition",
-            "description": "compose组合其他条件"
-          }
-        ],
-        "description": "任意条件"
-      },
-      "FieldFilter": {
-        "type": "object",
-        "properties": {
-          "key": {
-            "type": "string",
-            "description": "指定的键，必须完全匹配",
-            "nullable": true
-          },
-          "string&array": {
-            "type": "object",
-            "properties": {
-              "mode": {
-                "type": "string",
-                "enum": [
-                  "equal",
-                  "include"
+                    "displayName",
+                    "information",
+                    "id",
+                    "createdBy",
+                    "tags",
+                    "illustrations",
+                    "specy",
+                    "height",
+                    "length",
+                    "isFemale",
+                    "color",
+                    "relationShips",
+                    "isDied"
                 ],
-                "description": "键对应的值是包含还是等于"
-              },
-              "value": {
-                "type": "string",
-                "description": "值 关键词或全字匹配"
-              }
+                "description": "完整的角色信息"
             },
-            "required": [
-              "mode",
-              "value"
-            ],
-            "description": "字段是字符串或数组",
-            "nullable": true
-          },
-          "number": {
-            "type": "object",
-            "properties": {
-              "mode": {
-                "type": "string",
-                "enum": [
-                  "inRange",
-                  "closet"
-                ],
-                "description": "键对应的值要求inRange还是closet某个值"
-              },
-              "pattern": {
+            "TextureObject": {
                 "type": "object",
                 "properties": {
-                  "a": {
-                    "type": "number",
-                    "description": "若为inRange，则为闭区间左端否则为closet目标值"
-                  },
-                  "b": {
-                    "type": "number",
-                    "description": "若为inRange，则为闭区间右端否则为closet最大偏移量"
-                  }
+                    "id": {
+                        "description": "ID 编号",
+                        "$ref": "#/components/schemas/ContentUUID"
+                    },
+                    "hash": {
+                        "type": "string",
+                        "description": "哈希"
+                    },
+                    "uploader": {
+                        "type": "string",
+                        "description": "上传者"
+                    }
                 },
-                "required": [
-                  "a",
-                  "b"
+                "required": ["id", "hash", "uploader"],
+                "description": "图片对象"
+            },
+            "EqualCondition": {
+                "type": "object",
+                "properties": {
+                    "filter": {
+                        "$ref": "#/components/schemas/FieldFilter",
+                        "description": "字段过滤器"
+                    },
+                    "type": {
+                        "type": "string",
+                        "const": "equal",
+                        "description": "用于区分equal与compose"
+                    },
+                    "fieldType": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/FieldType",
+                            "description": "作用的字段类型"
+                        },
+                        "description": "作用的字段类型"
+                    }
+                },
+                "required": ["filter", "type", "fieldType"],
+                "description": "==条件"
+            },
+            "ComposeCondition": {
+                "type": "object",
+                "properties": {
+                    "filters": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/AnyCondition",
+                            "description": "任意条件嵌套均可"
+                        },
+                        "description": "字段过滤器"
+                    },
+                    "type": {
+                        "type": "string",
+                        "const": "compose",
+                        "description": "用于区分equal与compose"
+                    },
+                    "fieldType": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/FieldType",
+                            "description": "字段类型"
+                        },
+                        "description": "作用的字段类型"
+                    },
+                    "composeType": {
+                        "type": "string",
+                        "enum": ["and", "or"]
+                    }
+                },
+                "required": ["filters", "type", "fieldType", "composeType"],
+                "description": "or或and等有子句的条件"
+            },
+            "AnyCondition": {
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/EqualCondition",
+                        "description": "equal全量匹配"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ComposeCondition",
+                        "description": "compose组合其他条件"
+                    }
                 ],
-                "description": "模式数值",
-                "nullable": true
-              }
+                "description": "任意条件"
             },
-            "required": [
-              "mode"
-            ],
-            "description": "字段是数字",
-            "nullable": true
-          },
-          "color": {
-            "type": "object",
-            "properties": {
-              "target": {
-                "type": "string",
-                "description": "目标颜色"
-              },
-              "allowOffset": {
-                "type": "string",
-                "description": "deltaE允许的差值"
-              }
+            "FieldFilter": {
+                "type": "object",
+                "properties": {
+                    "key": {
+                        "type": "string",
+                        "description": "指定的键，必须完全匹配",
+                        "nullable": true
+                    },
+                    "string&array": {
+                        "type": "object",
+                        "properties": {
+                            "mode": {
+                                "type": "string",
+                                "enum": ["equal", "include"],
+                                "description": "键对应的值是包含还是等于"
+                            },
+                            "value": {
+                                "type": "string",
+                                "description": "值 关键词或全字匹配"
+                            }
+                        },
+                        "required": ["mode", "value"],
+                        "description": "字段是字符串或数组",
+                        "nullable": true
+                    },
+                    "number": {
+                        "type": "object",
+                        "properties": {
+                            "mode": {
+                                "type": "string",
+                                "enum": ["inRange", "closet"],
+                                "description": "键对应的值要求inRange还是closet某个值"
+                            },
+                            "pattern": {
+                                "type": "object",
+                                "properties": {
+                                    "a": {
+                                        "type": "number",
+                                        "description": "若为inRange，则为闭区间左端否则为closet目标值"
+                                    },
+                                    "b": {
+                                        "type": "number",
+                                        "description": "若为inRange，则为闭区间右端否则为closet最大偏移量"
+                                    }
+                                },
+                                "required": ["a", "b"],
+                                "description": "模式数值",
+                                "nullable": true
+                            }
+                        },
+                        "required": ["mode"],
+                        "description": "字段是数字",
+                        "nullable": true
+                    },
+                    "color": {
+                        "type": "object",
+                        "properties": {
+                            "target": {
+                                "type": "string",
+                                "description": "目标颜色"
+                            },
+                            "allowOffset": {
+                                "type": "string",
+                                "description": "deltaE允许的差值"
+                            }
+                        },
+                        "required": ["target", "allowOffset"],
+                        "description": "字段是RGB颜色",
+                        "nullable": true
+                    }
+                },
+                "description": "字段过滤器",
+                "required": ["key"]
             },
-            "required": [
-              "target",
-              "allowOffset"
-            ],
-            "description": "字段是RGB颜色",
-            "nullable": true
-          }
+            "FieldType": {
+                "type": "string",
+                "enum": ["string&array", "number", "color"],
+                "description": "字段的所有数据类型"
+            },
+            "ColorRGB": {
+                "type": "object",
+                "properties": {
+                    "r": {
+                        "type": "number",
+                        "description": "R"
+                    },
+                    "g": {
+                        "type": "number",
+                        "description": "G"
+                    },
+                    "b": {
+                        "type": "number",
+                        "description": "B"
+                    }
+                },
+                "required": ["r", "g", "b"],
+                "description": "RGB颜色"
+            },
+            "ComposedColor": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/ColorRGB"
+                }
+            },
+            "ContentType": {
+                "type": "string",
+                "enum": ["character", "object", "illustration", "specy"]
+            },
+            "ContentID": {
+                "type": "integer",
+                "description": "内容ID"
+            },
+            "ContentUUID": {
+                "type": "string",
+                "description": "内容ID",
+                "format": "uuid"
+            }
         },
-        "description": "字段过滤器",
-        "required": [
-          "key"
-        ]
-      },
-      "FieldType": {
-        "type": "string",
-        "enum": [
-          "string&array",
-          "number",
-          "color"
-        ],
-        "description": "字段的所有数据类型"
-      },
-      "ColorRGB": {
-        "type": "object",
-        "properties": {
-          "r": {
-            "type": "number",
-            "description": "R"
-          },
-          "g": {
-            "type": "number",
-            "description": "G"
-          },
-          "b": {
-            "type": "number",
-            "description": "B"
-          }
-        },
-        "required": [
-          "r",
-          "g",
-          "b"
-        ],
-        "description": "RGB颜色"
-      },
-      "ComposedColor": {
-        "type": "array",
-        "items": {
-          "$ref": "#/components/schemas/ColorRGB"
-        }
-      },
-      "ContentType": {
-        "type": "string",
-        "enum": [
-          "character",
-          "object",
-          "illustration",
-          "specy"
-        ]
-      },
-      "ContentID": {
-        "type": "integer",
-        "description": "内容ID"
-      },
-      "ContentUUID": {
-        "type": "string",
-        "description": "内容ID",
-        "format": "uuid"
-      }
+        "responses": {},
+        "securitySchemes": {}
     },
-    "responses": {},
-    "securitySchemes": {}
-  },
-  "servers": [],
-  "security": []
+    "servers": [],
+    "security": []
 }

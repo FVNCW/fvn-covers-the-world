@@ -4,5 +4,5 @@ program.option("-e, --env", "", false);
 program.parse();
 
 export default program.opts() satisfies Partial<{
-	env: boolean;
+    env: boolean;
 }>;

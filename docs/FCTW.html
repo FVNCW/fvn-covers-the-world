@@ -73840,13 +73840,11 @@
                                 const { name: v, style: _, explode: j, content: M } = m;
                                 if (M) {
                                     const i = Object.keys(M)[0];
-                                    return void (s.url = s.url
-                                        .split(`{${v}}`)
-                                        .join(
-                                            encodeDisallowedCharacters(serialize(u, i), {
-                                                escape: !0,
-                                            }),
-                                        ));
+                                    return void (s.url = s.url.split(`{${v}}`).join(
+                                        encodeDisallowedCharacters(serialize(u, i), {
+                                            escape: !0,
+                                        }),
+                                    ));
                                 }
                                 const $ = stylize({
                                     key: m.name,
@@ -75699,20 +75697,18 @@
                                                     He.createElement(
                                                         "div",
                                                         { className: "modal-ux-content" },
-                                                        j
-                                                            .valueSeq()
-                                                            .map((j, $) =>
-                                                                He.createElement(M, {
-                                                                    key: $,
-                                                                    AST: _,
-                                                                    definitions: j,
-                                                                    getComponent: u,
-                                                                    errSelectors: m,
-                                                                    authSelectors: i,
-                                                                    authActions: s,
-                                                                    specSelectors: v,
-                                                                }),
-                                                            ),
+                                                        j.valueSeq().map((j, $) =>
+                                                            He.createElement(M, {
+                                                                key: $,
+                                                                AST: _,
+                                                                definitions: j,
+                                                                getComponent: u,
+                                                                errSelectors: m,
+                                                                authSelectors: i,
+                                                                authActions: s,
+                                                                specSelectors: v,
+                                                            }),
+                                                        ),
                                                     ),
                                                 ),
                                             ),

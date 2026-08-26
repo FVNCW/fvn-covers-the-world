@@ -182,10 +182,10 @@ export async function searchContent(
         type === "character"
             ? Characters
             : type === "object"
-                ? Objects
-                : type === "illustration"
-                    ? Illustrations
-                    : Specys;
+              ? Objects
+              : type === "illustration"
+                ? Illustrations
+                : Specys;
     const rows = await db.select().from(table);
     return rows.filter((row) => evalCondition(row as Record<string, unknown>, condition));
 }
