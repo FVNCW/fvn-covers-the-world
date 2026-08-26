@@ -4,5 +4,6 @@ COPY . /app
 WORKDIR /app
 RUN npm i -g bun
 RUN bun i
+RUN chmod +x ./scripts/app.sh
 
 ENTRYPOINT [ "./scripts/app.sh" ]
