@@ -5,4 +5,4 @@ WORKDIR /app
 RUN npm i -g bun
 RUN bun i
 
-ENTRYPOINT [ "./app.sh" ]
+ENTRYPOINT [ "./scripts/app.sh" ]
