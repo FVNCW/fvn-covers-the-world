@@ -6,4 +6,4 @@ RUN npm i -g bun
 RUN bun i
 RUN chmod +x ./scripts/app.sh
 
-ENTRYPOINT [ "./scripts/app.sh" ]
+ENTRYPOINT ["sh","./scripts/app.sh"]
