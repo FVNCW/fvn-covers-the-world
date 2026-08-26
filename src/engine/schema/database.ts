@@ -25,6 +25,7 @@ export const Specys = pgTable("specys", {
     id: serial("id").primaryKey(),
     displayName: text("display_name").notNull(),
     parents: integer("parents").array().notNull(),
+    conflictWith: integer("conflict_with").array().notNull().default([]),
 });
 
 export const Characters = pgTable("characters", {

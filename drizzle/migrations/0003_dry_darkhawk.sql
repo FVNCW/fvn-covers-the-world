@@ -1,0 +1,1 @@
+ALTER TABLE "specys" ADD COLUMN "conflict_with" integer[] NOT NULL;

@@ -1,0 +1,1 @@
+ALTER TABLE "specys" ALTER COLUMN "conflict_with" SET DEFAULT '{}';

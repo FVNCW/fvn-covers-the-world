@@ -179,7 +179,11 @@ export const authRoutes = new Elysia()
         async ({ body }) => {
             const [row] = await db
                 .insert(Specys)
-                .values({ parents: body.parents, displayName: body.displayName })
+                .values({
+                    parents: body.parents,
+                    displayName: body.displayName,
+                    conflictWith: body.conflictWith,
+                })
                 .returning();
             return [row];
         },
@@ -187,6 +191,7 @@ export const authRoutes = new Elysia()
             body: t.Object({
                 parents: t.Array(t.Number()),
                 displayName: t.String(),
+                conflictWith: t.Array(t.Number()),
             }),
         },
     )

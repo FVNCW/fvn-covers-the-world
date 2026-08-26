@@ -739,11 +739,20 @@
                   "displayName": {
                     "type": "string",
                     "description": "名字"
+                  },
+                  "conflictWith": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/ContentID",
+                      "description": "指向物种ID"
+                    },
+                    "description": "与哪些物种产生混血冲突"
                   }
                 },
                 "required": [
                   "parents",
-                  "displayName"
+                  "displayName",
+                  "conflictWith"
                 ]
               },
               "examples": {}
@@ -835,7 +844,7 @@
       "get": {
         "summary": "检测几个物种能否混血",
         "deprecated": false,
-        "description": "",
+        "description": "返回的数组每项都为会产生混血冲突的两个物种",
         "tags": [],
         "parameters": [
           {
@@ -866,10 +875,10 @@
                     "type": "object",
                     "properties": {
                       "a": {
-                        "type": "integer"
+                        "$ref": "#/components/schemas/Specy"
                       },
                       "b": {
-                        "type": "integer"
+                        "$ref": "#/components/schemas/Specy"
                       }
                     },
                     "required": [
@@ -1102,12 +1111,21 @@
           "displayName": {
             "type": "string",
             "description": "名字"
+          },
+          "conflictWith": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContentID",
+              "description": "指向物种ID"
+            },
+            "description": "与哪些物种产生混血冲突"
           }
         },
         "required": [
           "displayName",
           "id",
-          "parents"
+          "parents",
+          "conflictWith"
         ],
         "description": "物种"
       },

@@ -1,6 +1,6 @@
 import Elysia, { t } from "elysia";
 import { db } from "../app";
-import { sql, eq } from "drizzle-orm";
+import { sql, eq, inArray } from "drizzle-orm";
 import { Characters, Illustrations, Objects, Specys } from "../schema/database";
 import { generateSeed } from "../util/math";
 import { apiState } from "../util/response";
@@ -86,9 +86,29 @@ export const publicRoutes = new Elysia()
 	})
 	.get(
 		"/api/specy/try-mix",
-		async () => {
-			// 混血判定逻辑待文档定义，暂时返回空数组
-			return [];
+		async ({ query }) => {
+			// 混血判定：返回会产生混血冲突的物种两两配对
+			const ids = Array.from(
+				new Set(
+					query.specy
+						.map((v) => Number(v))
+						.filter((n) => Number.isInteger(n) && n > 0),
+				),
+			);
+			if (ids.length < 2) return [];
+
+			const selected = await db.select().from(Specys).where(inArray(Specys.id, ids));
+			const conflicts: { a: (typeof selected)[number]; b: (typeof selected)[number] }[] = [];
+			for (let i = 0; i < selected.length; i++) {
+				for (let j = i + 1; j < selected.length; j++) {
+					const a = selected[i]!;
+					const b = selected[j]!;
+					if (a.conflictWith.includes(b.id) || b.conflictWith.includes(a.id)) {
+						conflicts.push({ a, b });
+					}
+				}
+			}
+			return conflicts;
 		},
 		{
 			query: t.Object({ specy: t.Array(t.String()) }),
