@@ -63,7 +63,8 @@
             "description": "ID编号",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -105,7 +106,8 @@
             "description": "ID编号",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -164,7 +166,8 @@
             "description": "",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -198,7 +201,8 @@
             "description": "",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -252,7 +256,7 @@
                 "type": "object",
                 "properties": {
                   "character": {
-                    "type": "number"
+                    "$ref": "#/components/schemas/ContentID"
                   },
                   "illustration": {
                     "type": "object",
@@ -325,7 +329,7 @@
             "description": "",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           }
         ],
@@ -589,7 +593,7 @@
                 "type": "object",
                 "properties": {
                   "id": {
-                    "type": "number"
+                    "$ref": "#/components/schemas/ContentID"
                   }
                 },
                 "required": [
@@ -678,6 +682,39 @@
         "security": []
       }
     },
+    "/api/character/data/{id}": {
+      "get": {
+        "summary": "角色信息",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Character"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
     "/api/specy/create": {
       "post": {
         "summary": "创建节点",
@@ -748,7 +785,7 @@
             "description": "",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           }
         ],
@@ -862,7 +899,7 @@
             "description": "",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           },
           {
@@ -911,7 +948,7 @@
             "description": "",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           }
         ],
@@ -1020,8 +1057,8 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "number",
-            "description": "数据库ID"
+            "description": "数据库ID",
+            "$ref": "#/components/schemas/ContentID"
           },
           "objectId": {
             "type": "string",
@@ -1050,6 +1087,10 @@
       "Specy": {
         "type": "object",
         "properties": {
+          "id": {
+            "description": "数据库ID",
+            "$ref": "#/components/schemas/ContentID"
+          },
           "parents": {
             "type": "array",
             "items": {
@@ -1057,10 +1098,6 @@
               "description": "指向物种ID，为空代表根物种"
             },
             "description": "父物种"
-          },
-          "id": {
-            "type": "number",
-            "description": "数据库ID"
           },
           "displayName": {
             "type": "string",
@@ -1078,8 +1115,8 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "number",
-            "description": "数据库ID"
+            "description": "数据库ID",
+            "$ref": "#/components/schemas/ContentID"
           },
           "createdBy": {
             "type": "string",
@@ -1263,8 +1300,8 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "string",
-            "description": "ID 编号"
+            "description": "ID 编号",
+            "$ref": "#/components/schemas/ContentUUID"
           },
           "hash": {
             "type": "string",
@@ -1502,6 +1539,15 @@
           "illustration",
           "specy"
         ]
+      },
+      "ContentID": {
+        "type": "integer",
+        "description": "内容ID"
+      },
+      "ContentUUID": {
+        "type": "string",
+        "description": "内容ID",
+        "format": "uuid"
       }
     },
     "responses": {},
