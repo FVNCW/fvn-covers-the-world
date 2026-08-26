@@ -20,7 +20,7 @@ export const publicRoutes = new Elysia()
 					.from(Characters)
 					.orderBy(sql`random()`)
 					.limit(1);
-				return row;
+				return JSON.stringify(row ?? null);
 			});
 		},
 		{
