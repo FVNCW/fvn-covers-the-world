@@ -1,4 +1,4 @@
 #!/bin/sh
 
 bun run push --force
-bun start
+bun start -e
