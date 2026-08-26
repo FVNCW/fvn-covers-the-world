@@ -950,6 +950,68 @@
         },
         "security": []
       }
+    },
+    "/api/search": {
+      "post": {
+        "summary": "获取内容列表",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "$ref": "#/components/schemas/ContentType"
+                  },
+                  "condition": {
+                    "$ref": "#/components/schemas/AnyCondition"
+                  }
+                },
+                "required": [
+                  "type",
+                  "condition"
+                ]
+              },
+              "examples": {}
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "oneOf": [
+                      {
+                        "$ref": "#/components/schemas/Character"
+                      },
+                      {
+                        "$ref": "#/components/schemas/TextureObject"
+                      },
+                      {
+                        "$ref": "#/components/schemas/Illustration"
+                      },
+                      {
+                        "$ref": "#/components/schemas/Specy"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
     }
   },
   "components": {
@@ -1220,6 +1282,188 @@
         ],
         "description": "图片对象"
       },
+      "EqualCondition": {
+        "type": "object",
+        "properties": {
+          "filter": {
+            "$ref": "#/components/schemas/FieldFilter",
+            "description": "字段过滤器"
+          },
+          "type": {
+            "type": "string",
+            "const": "equal",
+            "description": "用于区分equal与compose"
+          },
+          "fieldType": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FieldType",
+              "description": "作用的字段类型"
+            },
+            "description": "作用的字段类型"
+          }
+        },
+        "required": [
+          "filter",
+          "type",
+          "fieldType"
+        ],
+        "description": "==条件"
+      },
+      "ComposeCondition": {
+        "type": "object",
+        "properties": {
+          "filters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AnyCondition",
+              "description": "任意条件嵌套均可"
+            },
+            "description": "字段过滤器"
+          },
+          "type": {
+            "type": "string",
+            "const": "compose",
+            "description": "用于区分equal与compose"
+          },
+          "fieldType": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FieldType",
+              "description": "字段类型"
+            },
+            "description": "作用的字段类型"
+          },
+          "composeType": {
+            "type": "string",
+            "enum": [
+              "and",
+              "or"
+            ]
+          }
+        },
+        "required": [
+          "filters",
+          "type",
+          "fieldType",
+          "composeType"
+        ],
+        "description": "or或and等有子句的条件"
+      },
+      "AnyCondition": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/EqualCondition",
+            "description": "equal全量匹配"
+          },
+          {
+            "$ref": "#/components/schemas/ComposeCondition",
+            "description": "compose组合其他条件"
+          }
+        ],
+        "description": "任意条件"
+      },
+      "FieldFilter": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "指定的键，必须完全匹配"
+          },
+          "string&array": {
+            "type": "object",
+            "properties": {
+              "mode": {
+                "type": "string",
+                "enum": [
+                  "equal",
+                  "include"
+                ],
+                "description": "键对应的值是包含还是等于"
+              },
+              "value": {
+                "type": "string",
+                "description": "值 关键词或全字匹配"
+              }
+            },
+            "required": [
+              "mode",
+              "value"
+            ],
+            "description": "字段是字符串或数组",
+            "nullable": true
+          },
+          "number": {
+            "type": "object",
+            "properties": {
+              "mode": {
+                "type": "string",
+                "enum": [
+                  "inRange",
+                  "closet"
+                ],
+                "description": "键对应的值要求inRange还是closet某个值"
+              },
+              "pattern": {
+                "type": "object",
+                "properties": {
+                  "a": {
+                    "type": "number",
+                    "description": "若为inRange，则为闭区间左端否则为closet目标值"
+                  },
+                  "b": {
+                    "type": "number",
+                    "description": "若为inRange，则为闭区间右端否则为closet最大偏移量"
+                  }
+                },
+                "required": [
+                  "a",
+                  "b"
+                ],
+                "description": "模式数值",
+                "nullable": true
+              }
+            },
+            "required": [
+              "mode"
+            ],
+            "description": "字段是数字",
+            "nullable": true
+          },
+          "color": {
+            "type": "object",
+            "properties": {
+              "target": {
+                "type": "string",
+                "description": "目标颜色"
+              },
+              "allowOffset": {
+                "type": "string",
+                "description": "deltaE允许的差值"
+              }
+            },
+            "required": [
+              "target",
+              "allowOffset"
+            ],
+            "description": "字段是RGB颜色",
+            "nullable": true
+          }
+        },
+        "description": "字段过滤器",
+        "required": [
+          "key"
+        ]
+      },
+      "FieldType": {
+        "type": "string",
+        "enum": [
+          "string&array",
+          "number",
+          "color"
+        ],
+        "description": "字段的所有数据类型"
+      },
       "ColorRGB": {
         "type": "object",
         "properties": {
@@ -1248,6 +1492,15 @@
         "items": {
           "$ref": "#/components/schemas/ColorRGB"
         }
+      },
+      "ContentType": {
+        "type": "string",
+        "enum": [
+          "character",
+          "object",
+          "illustration",
+          "specy"
+        ]
       }
     },
     "responses": {},
