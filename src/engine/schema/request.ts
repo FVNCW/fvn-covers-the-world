@@ -66,7 +66,7 @@ export const FieldType = t.Union([
 ]);
 
 export const FieldFilter = t.Object({
-    key: t.String(),
+    key: t.Union([t.String(), t.Null()]),
     "string&array": t.Optional(
         t.Object({
             mode: t.Union([t.Literal("equal"), t.Literal("include")]),

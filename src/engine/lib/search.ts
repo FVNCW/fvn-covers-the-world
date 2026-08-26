@@ -17,7 +17,7 @@ export interface ColorFilter {
     allowOffset: string;
 }
 export interface FieldFilter {
-    key: string;
+    key: string | null;
     "string&array"?: StringArrayFilter;
     number?: NumberFilter;
     color?: ColorFilter;
@@ -40,23 +40,6 @@ function getByPath(row: Record<string, unknown>, key: string): unknown {
         if (o == null || typeof o !== "object") return undefined;
         return (o as Record<string, unknown>)[k];
     }, row);
-}
-
-function matchStringArray(value: unknown, f: StringArrayFilter): boolean {
-    const list = Array.isArray(value) ? value : value == null ? [] : [value];
-    return list.some((item) => {
-        if (typeof item !== "string") return false;
-        return f.mode === "equal" ? item === f.value : item.includes(f.value);
-    });
-}
-
-function matchNumber(value: unknown, f: NumberFilter): boolean {
-    const list = Array.isArray(value) ? value : value == null ? [] : [value];
-    return list.some((item) => {
-        if (typeof item !== "number" || !f.pattern) return false;
-        const { a, b } = f.pattern;
-        return f.mode === "inRange" ? a <= item && item <= b : Math.abs(item - a) <= b;
-    });
 }
 
 function parseColor(input: string): { r: number; g: number; b: number } | null {
@@ -97,31 +80,96 @@ function deltaE(
     return Math.sqrt((lhs.L - rhs.L) ** 2 + (lhs.a - rhs.a) ** 2 + (lhs.b - rhs.b) ** 2);
 }
 
-function matchColor(value: unknown, f: ColorFilter): boolean {
+function isStringArray(value: unknown, f: StringArrayFilter): boolean {
+    if (typeof value === "string") {
+        return f.mode === "equal" ? value === f.value : value.includes(f.value);
+    }
+    if (Array.isArray(value)) {
+        return value.some((item) => isStringArray(item, f));
+    }
+    return false;
+}
+
+function isNumber(value: unknown, f: NumberFilter): boolean {
+    if (typeof value === "number" && f.pattern) {
+        const { a, b } = f.pattern;
+        return f.mode === "inRange" ? a <= value && value <= b : Math.abs(value - a) <= b;
+    }
+    if (Array.isArray(value)) {
+        return value.some((item) => isNumber(item, f));
+    }
+    return false;
+}
+
+function isColor(value: unknown, f: ColorFilter): boolean {
+    if (Array.isArray(value)) {
+        return value.some((item) => isColor(item, f));
+    }
+    if (!value || typeof value !== "object") return false;
+    const { r, g, b } = value as { r: number; g: number; b: number };
+    if (typeof r !== "number" || typeof g !== "number" || typeof b !== "number") return false;
     const target = parseColor(f.target);
     if (!target) return false;
     const offset = Number(f.allowOffset);
     if (Number.isNaN(offset)) return false;
-    const list = Array.isArray(value) ? value : value == null ? [] : [value];
-    const targetLab = rgbToLab(target);
-    return list.some((item) => {
-        if (!item || typeof item !== "object") return false;
-        const { r, g, b } = item as { r: number; g: number; b: number };
-        if (typeof r !== "number" || typeof g !== "number" || typeof b !== "number") return false;
-        return deltaE(rgbToLab({ r, g, b }), targetLab) <= offset;
-    });
+    return deltaE(rgbToLab({ r, g, b }), rgbToLab(target)) <= offset;
 }
 
-function matchField(row: Record<string, unknown>, filter: FieldFilter): boolean {
+/**
+ * 遍历行对象的所有字段（含嵌套），收集指定 fieldType 的字段值。
+ */
+function collectFields(
+    row: unknown,
+    fieldTypes: FieldType[],
+    out: unknown[],
+    visited = new Set<unknown>(),
+): void {
+    if (row == null || typeof row !== "object" || visited.has(row)) return;
+    visited.add(row);
+    if (Array.isArray(row)) {
+        for (const item of row) collectFields(item, fieldTypes, out, visited);
+        return;
+    }
+    for (const value of Object.values(row as Record<string, unknown>)) {
+        if (Array.isArray(value) || (value != null && typeof value === "object")) {
+            collectFields(value, fieldTypes, out, visited);
+        } else {
+            for (const fieldType of fieldTypes) {
+                if (fieldType === "string&array" && typeof value === "string") out.push(value);
+                else if (fieldType === "number" && typeof value === "number") out.push(value);
+            }
+        }
+    }
+}
+
+function matchField(
+    row: Record<string, unknown>,
+    filter: FieldFilter,
+    fieldTypes: FieldType[],
+): boolean {
+    if (filter.key == null) {
+        const values: unknown[] = [];
+        collectFields(row, fieldTypes, values);
+        const sa = filter["string&array"];
+        if (sa) return values.some((v) => isStringArray(v, sa));
+        const num = filter.number;
+        if (num) return values.some((v) => isNumber(v, num));
+        const col = filter.color;
+        if (col) return values.some((v) => isColor(v, col));
+        return false;
+    }
     const value = getByPath(row, filter.key);
-    if (filter["string&array"]) return matchStringArray(value, filter["string&array"]);
-    if (filter.number) return matchNumber(value, filter.number);
-    if (filter.color) return matchColor(value, filter.color);
+    const sa = filter["string&array"];
+    if (sa) return isStringArray(value, sa);
+    const num = filter.number;
+    if (num) return isNumber(value, num);
+    const col = filter.color;
+    if (col) return isColor(value, col);
     return false;
 }
 
 function evalCondition(row: Record<string, unknown>, cond: AnyCondition): boolean {
-    if (cond.type === "equal") return matchField(row, cond.filter);
+    if (cond.type === "equal") return matchField(row, cond.filter, cond.fieldType);
     const results = cond.filters.map((c) => evalCondition(row, c));
     return cond.composeType === "and" ? results.every(Boolean) : results.some(Boolean);
 }
@@ -134,10 +182,10 @@ export async function searchContent(
         type === "character"
             ? Characters
             : type === "object"
-              ? Objects
-              : type === "illustration"
-                ? Illustrations
-                : Specys;
+                ? Objects
+                : type === "illustration"
+                    ? Illustrations
+                    : Specys;
     const rows = await db.select().from(table);
     return rows.filter((row) => evalCondition(row as Record<string, unknown>, condition));
 }
