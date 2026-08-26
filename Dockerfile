@@ -5,5 +5,4 @@ WORKDIR /app
 RUN npm i -g bun
 RUN bun i
 
-CMD [ "bun", "run", "push", "--force" ]
-ENTRYPOINT [ "bun", "start" ]
+ENTRYPOINT [ "./app.sh" ]
