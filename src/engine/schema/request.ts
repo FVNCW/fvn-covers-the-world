@@ -58,3 +58,62 @@ export const Character = t.Object({
 });
 
 export const CharacterCreation = t.Omit(Character, ["id", "createdBy", "illustrations"]);
+
+export const FieldType = t.Union([
+    t.Literal("string&array"),
+    t.Literal("number"),
+    t.Literal("color"),
+]);
+
+export const FieldFilter = t.Object({
+    key: t.String(),
+    "string&array": t.Optional(
+        t.Object({
+            mode: t.Union([t.Literal("equal"), t.Literal("include")]),
+            value: t.String(),
+        }),
+    ),
+    number: t.Optional(
+        t.Object({
+            mode: t.Union([t.Literal("inRange"), t.Literal("closet")]),
+            pattern: t.Optional(
+                t.Object({
+                    a: t.Number(),
+                    b: t.Number(),
+                }),
+            ),
+        }),
+    ),
+    color: t.Optional(
+        t.Object({
+            target: t.String(),
+            allowOffset: t.String(),
+        }),
+    ),
+});
+
+export const AnyCondition = t.Recursive((Self) =>
+    t.Union([
+        t.Object({
+            type: t.Literal("equal"),
+            filter: FieldFilter,
+            fieldType: t.Array(FieldType),
+        }),
+        t.Object({
+            type: t.Literal("compose"),
+            composeType: t.Union([t.Literal("and"), t.Literal("or")]),
+            filters: t.Array(Self),
+            fieldType: t.Array(FieldType),
+        }),
+    ]),
+);
+
+export const SearchBody = t.Object({
+    type: t.Union([
+        t.Literal("character"),
+        t.Literal("object"),
+        t.Literal("illustration"),
+        t.Literal("specy"),
+    ]),
+    condition: AnyCondition,
+});

@@ -1,0 +1,143 @@
+import { db } from "../app";
+import { Characters, Illustrations, Objects, Specys } from "../schema/database";
+
+export type FieldType = "string&array" | "number" | "color";
+export type ContentType = "character" | "object" | "illustration" | "specy";
+
+export interface StringArrayFilter {
+    mode: "equal" | "include";
+    value: string;
+}
+export interface NumberFilter {
+    mode: "inRange" | "closet";
+    pattern?: { a: number; b: number };
+}
+export interface ColorFilter {
+    target: string;
+    allowOffset: string;
+}
+export interface FieldFilter {
+    key: string;
+    "string&array"?: StringArrayFilter;
+    number?: NumberFilter;
+    color?: ColorFilter;
+}
+export interface EqualCondition {
+    type: "equal";
+    filter: FieldFilter;
+    fieldType: FieldType[];
+}
+export interface ComposeCondition {
+    type: "compose";
+    composeType: "and" | "or";
+    filters: AnyCondition[];
+    fieldType: FieldType[];
+}
+export type AnyCondition = EqualCondition | ComposeCondition;
+
+function getByPath(row: Record<string, unknown>, key: string): unknown {
+    return key.split(".").reduce<unknown>((o, k) => {
+        if (o == null || typeof o !== "object") return undefined;
+        return (o as Record<string, unknown>)[k];
+    }, row);
+}
+
+function matchStringArray(value: unknown, f: StringArrayFilter): boolean {
+    const list = Array.isArray(value) ? value : value == null ? [] : [value];
+    return list.some((item) => {
+        if (typeof item !== "string") return false;
+        return f.mode === "equal" ? item === f.value : item.includes(f.value);
+    });
+}
+
+function matchNumber(value: unknown, f: NumberFilter): boolean {
+    const list = Array.isArray(value) ? value : value == null ? [] : [value];
+    return list.some((item) => {
+        if (typeof item !== "number" || !f.pattern) return false;
+        const { a, b } = f.pattern;
+        return f.mode === "inRange" ? a <= item && item <= b : Math.abs(item - a) <= b;
+    });
+}
+
+function parseColor(input: string): { r: number; g: number; b: number } | null {
+    const hex = /^#?([0-9a-f]{6})$/i.exec(input.trim());
+    if (hex) {
+        const n = parseInt(hex[1]!, 16);
+        return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
+    }
+    const rgb = /^rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/i.exec(input.trim());
+    if (rgb) {
+        return { r: Number(rgb[1]), g: Number(rgb[2]), b: Number(rgb[3]) };
+    }
+    return null;
+}
+
+function rgbToLab({ r, g, b }: { r: number; g: number; b: number }) {
+    const linear = (v: number) => {
+        v /= 255;
+        return v > 0.04045 ? Math.pow((v + 0.055) / 1.055, 2.4) : v / 12.92;
+    };
+    const R = linear(r);
+    const G = linear(g);
+    const B = linear(b);
+    let X = (R * 0.4124 + G * 0.3576 + B * 0.1805) / 0.95047;
+    let Y = R * 0.2126 + G * 0.7152 + B * 0.0722;
+    let Z = (R * 0.0193 + G * 0.1192 + B * 0.9505) / 1.08883;
+    const gamma = (v: number) => (v > 0.008856 ? Math.cbrt(v) : 7.787 * v + 16 / 116);
+    X = gamma(X);
+    Y = gamma(Y);
+    Z = gamma(Z);
+    return { L: 116 * Y - 16, a: 500 * (X - Y), b: 200 * (Y - Z) };
+}
+
+function deltaE(
+    lhs: { L: number; a: number; b: number },
+    rhs: { L: number; a: number; b: number },
+): number {
+    return Math.sqrt((lhs.L - rhs.L) ** 2 + (lhs.a - rhs.a) ** 2 + (lhs.b - rhs.b) ** 2);
+}
+
+function matchColor(value: unknown, f: ColorFilter): boolean {
+    const target = parseColor(f.target);
+    if (!target) return false;
+    const offset = Number(f.allowOffset);
+    if (Number.isNaN(offset)) return false;
+    const list = Array.isArray(value) ? value : value == null ? [] : [value];
+    const targetLab = rgbToLab(target);
+    return list.some((item) => {
+        if (!item || typeof item !== "object") return false;
+        const { r, g, b } = item as { r: number; g: number; b: number };
+        if (typeof r !== "number" || typeof g !== "number" || typeof b !== "number") return false;
+        return deltaE(rgbToLab({ r, g, b }), targetLab) <= offset;
+    });
+}
+
+function matchField(row: Record<string, unknown>, filter: FieldFilter): boolean {
+    const value = getByPath(row, filter.key);
+    if (filter["string&array"]) return matchStringArray(value, filter["string&array"]);
+    if (filter.number) return matchNumber(value, filter.number);
+    if (filter.color) return matchColor(value, filter.color);
+    return false;
+}
+
+function evalCondition(row: Record<string, unknown>, cond: AnyCondition): boolean {
+    if (cond.type === "equal") return matchField(row, cond.filter);
+    const results = cond.filters.map((c) => evalCondition(row, c));
+    return cond.composeType === "and" ? results.every(Boolean) : results.some(Boolean);
+}
+
+export async function searchContent(
+    type: ContentType,
+    condition: AnyCondition,
+): Promise<unknown[]> {
+    const table =
+        type === "character"
+            ? Characters
+            : type === "object"
+              ? Objects
+              : type === "illustration"
+                ? Illustrations
+                : Specys;
+    const rows = await db.select().from(table);
+    return rows.filter((row) => evalCondition(row as Record<string, unknown>, condition));
+}

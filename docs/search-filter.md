@@ -11,7 +11,7 @@
 #### 请求体
 
 | 字段        | 类型           | 说明                               |
-|-------------|----------------|------------------------------------|
+| ----------- | -------------- | ---------------------------------- |
 | `type`      | `ContentType`  | 要搜索的内容类型，限定到某张内容表 |
 | `condition` | `AnyCondition` | 过滤条件，可递归嵌套               |
 
@@ -54,9 +54,9 @@ AnyCondition
 
 ```ts
 interface EqualCondition {
-  type: "equal";             // 固定值，用于区分 equal 与 compose
-  filter: FieldFilter;       // 字段过滤器
-  fieldType: FieldType[];    // 作用的字段类型
+    type: "equal"; // 固定值，用于区分 equal 与 compose
+    filter: FieldFilter; // 字段过滤器
+    fieldType: FieldType[]; // 作用的字段类型
 }
 ```
 
@@ -64,10 +64,10 @@ interface EqualCondition {
 
 ```ts
 interface ComposeCondition {
-  type: "compose";              // 固定值
-  composeType: "and" | "or";    // 子条件组合方式
-  filters: AnyCondition[];      // 子条件，可任意嵌套
-  fieldType: FieldType[];
+    type: "compose"; // 固定值
+    composeType: "and" | "or"; // 子条件组合方式
+    filters: AnyCondition[]; // 子条件，可任意嵌套
+    fieldType: FieldType[];
 }
 ```
 
@@ -80,10 +80,10 @@ interface ComposeCondition {
 
 ```ts
 interface FieldFilter {
-  key: string;                       // 指定的键，必须完全匹配
-  "string&array"?: StringArrayFilter; // 字段为字符串或数组时
-  number?: NumberFilter;             // 字段为数字时
-  color?: ColorFilter;               // 字段为 RGB 颜色时
+    key: string; // 指定的键，必须完全匹配
+    "string&array"?: StringArrayFilter; // 字段为字符串或数组时
+    number?: NumberFilter; // 字段为数字时
+    color?: ColorFilter; // 字段为 RGB 颜色时
 }
 ```
 
@@ -91,13 +91,13 @@ interface FieldFilter {
 
 ```ts
 interface StringArrayFilter {
-  mode: "equal" | "include";
-  value: string;   // 关键词或全字匹配的值
+    mode: "equal" | "include";
+    value: string; // 关键词或全字匹配的值
 }
 ```
 
 | mode      | 语义                               |
-|-----------|------------------------------------|
+| --------- | ---------------------------------- |
 | `equal`   | 值全字相等（数组则为元素完全相等） |
 | `include` | 值包含关键词（数组则为包含该元素） |
 
@@ -105,13 +105,13 @@ interface StringArrayFilter {
 
 ```ts
 interface NumberFilter {
-  mode: "inRange" | "closet";
-  pattern?: { a: number; b: number };
+    mode: "inRange" | "closet";
+    pattern?: { a: number; b: number };
 }
 ```
 
 | mode      | pattern 语义                                            |
-|-----------|---------------------------------------------------------|
+| --------- | ------------------------------------------------------- |
 | `inRange` | `a` = 闭区间左端，`b` = 闭区间右端，要求 `a <= 值 <= b` |
 | `closet`  | `a` = 目标值，`b` = 最大偏移量，要求 `                  |
 
@@ -119,8 +119,8 @@ interface NumberFilter {
 
 ```ts
 interface ColorFilter {
-  target: string;      // 目标颜色
-  allowOffset: string; // 允许的 deltaE 色差
+    target: string; // 目标颜色
+    allowOffset: string; // 允许的 deltaE 色差
 }
 ```
 
@@ -140,15 +140,15 @@ type FieldType = "string&array" | "number" | "color";
 
 ```json
 {
-  "type": "specy",
-  "condition": {
-    "type": "equal",
-    "fieldType": ["string&array"],
-    "filter": {
-      "key": "displayName",
-      "string&array": { "mode": "equal", "value": "银龙" }
+    "type": "specy",
+    "condition": {
+        "type": "equal",
+        "fieldType": ["string&array"],
+        "filter": {
+            "key": "displayName",
+            "string&array": { "mode": "equal", "value": "银龙" }
+        }
     }
-  }
 }
 ```
 
@@ -156,30 +156,30 @@ type FieldType = "string&array" | "number" | "color";
 
 ```json
 {
-  "type": "character",
-  "condition": {
-    "type": "compose",
-    "composeType": "and",
-    "fieldType": ["number", "color"],
-    "filters": [
-      {
-        "type": "equal",
-        "fieldType": ["number"],
-        "filter": {
-          "key": "height",
-          "number": { "mode": "inRange", "pattern": { "a": 150, "b": 180 } }
-        }
-      },
-      {
-        "type": "equal",
-        "fieldType": ["color"],
-        "filter": {
-          "key": "color.fur",
-          "color": { "target": "#C0C0C0", "allowOffset": "10" }
-        }
-      }
-    ]
-  }
+    "type": "character",
+    "condition": {
+        "type": "compose",
+        "composeType": "and",
+        "fieldType": ["number", "color"],
+        "filters": [
+            {
+                "type": "equal",
+                "fieldType": ["number"],
+                "filter": {
+                    "key": "height",
+                    "number": { "mode": "inRange", "pattern": { "a": 150, "b": 180 } }
+                }
+            },
+            {
+                "type": "equal",
+                "fieldType": ["color"],
+                "filter": {
+                    "key": "color.fur",
+                    "color": { "target": "#C0C0C0", "allowOffset": "10" }
+                }
+            }
+        ]
+    }
 }
 ```
 
@@ -187,24 +187,27 @@ type FieldType = "string&array" | "number" | "color";
 
 ```json
 {
-  "type": "illustration",
-  "condition": {
-    "type": "compose",
-    "composeType": "or",
-    "fieldType": ["string&array"],
-    "filters": [
-      {
-        "type": "equal",
+    "type": "illustration",
+    "condition": {
+        "type": "compose",
+        "composeType": "or",
         "fieldType": ["string&array"],
-        "filter": { "key": "tags", "string&array": { "mode": "include", "value": "庆祝" } }
-      },
-      {
-        "type": "equal",
-        "fieldType": ["string&array"],
-        "filter": { "key": "displayName", "string&array": { "mode": "include", "value": "纪念" } }
-      }
-    ]
-  }
+        "filters": [
+            {
+                "type": "equal",
+                "fieldType": ["string&array"],
+                "filter": { "key": "tags", "string&array": { "mode": "include", "value": "庆祝" } }
+            },
+            {
+                "type": "equal",
+                "fieldType": ["string&array"],
+                "filter": {
+                    "key": "displayName",
+                    "string&array": { "mode": "include", "value": "纪念" }
+                }
+            }
+        ]
+    }
 }
 ```
 
