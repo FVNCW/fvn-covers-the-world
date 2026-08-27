@@ -1,6 +1,6 @@
 import Elysia, { t } from "elysia";
 import { auth, db } from "../app";
-import { Characters, Illustrations, Objects, Specys } from "../schema/database";
+import { Characters, Illustrations, Objects, Specys, user as userTable } from "../schema/database";
 import { CharacterCreation } from "../schema/request";
 import { and, eq, sql } from "drizzle-orm";
 import { apiState } from "../util/response";
@@ -230,4 +230,20 @@ export const authRoutes = new Elysia()
             params: t.Object({ id: t.String() }),
             body: t.Object({ displayName: t.String() }),
         },
-    );
+    )
+    .patch("/api/user/useAvatar", async ({ body, user, headers }) => {
+        user.avatarId = body;
+        console.log("1");
+
+        await auth.api.updateUser({
+            body: user,
+            headers
+        });
+        console.log("2");
+
+        console.log(await db.select().from(userTable).where(eq(userTable.id, user.id)));
+        console.log("3");
+
+    }, {
+        body: t.String()
+    });
